@@ -9,15 +9,16 @@ import '../../header-footer/footer.dart';
 import '../../../utils/constants.dart';
 import '../../../view_model/user_viewmodel.dart';
 
-class OwenerRegisterScreen extends StatefulWidget {
-  OwenerRegisterScreen({Key? key}) : super(key: key);
-  var ID = Get.arguments;
+class UserRegisterScreen extends StatefulWidget {
+  UserRegisterScreen({Key? key}) : super(key: key);
+  // var ID = Get.arguments;
+  var ID = 2;
 
   @override
-  _OwenerRegisterScreen createState() => _OwenerRegisterScreen();
+  _UserRegisterScreen createState() => _UserRegisterScreen();
 }
 
-class _OwenerRegisterScreen extends State<OwenerRegisterScreen> {
+class _UserRegisterScreen extends State<UserRegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -78,10 +79,10 @@ class _OwnerRegisterState extends State<OwnerRegister> {
               width: 1920.w,
               height: 1180.h,
               decoration: BoxDecoration(
-                // image: DecorationImage(
-                //   image: AssetImage(OwnerPageimg),
-                //   fit: BoxFit.cover,
-                // ),
+                image: DecorationImage(
+                  image: AssetImage(VillaBack),
+                  fit: BoxFit.cover,
+                ),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: ClipRRect(
@@ -111,7 +112,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 30.w,
-                                      color: Colors.white,
+                                      color: BlackColor,
                                     ),
                                   ),
                                   SizedBox(height: 24.h),
@@ -125,25 +126,26 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           decoration: const InputDecoration(
                                             suffixIcon: Icon(
                                               Icons.person,
-                                              color: Colors.white,
+                                              color: BlackColor,
                                             ),
                                             border: OutlineInputBorder(),
                                             labelStyle:
-                                            TextStyle(color: Colors.white),
+                                            TextStyle(color: BlackColor),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide:
-                                              BorderSide(color: Colors.white),
+                                              BorderSide(color: BlackColor),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide:
                                               BorderSide(color: LightBlueColor),
                                             ),
+                                            errorStyle: TextStyle(color: DarkBlueColor,fontWeight: FontWeight.bold),
                                             labelText: 'نام',
                                             helperText: "* الزامی",
                                             helperStyle:
-                                            TextStyle(color: Colors.white),
+                                            TextStyle(color: BlackColor),
                                           ),
-                                          style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
+                                          style: TextStyle(color: BlackColor,fontFamily: IranSansWeb,),
                                           onChanged: (value) {
                                             setState(() {
                                               _first_name = value;
@@ -163,25 +165,26 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           decoration: InputDecoration(
                                             suffixIcon: Icon(
                                               Icons.person,
-                                              color: Colors.white,
+                                              color: BlackColor,
                                             ),
                                             border: OutlineInputBorder(),
                                             labelStyle:
-                                            TextStyle(color: Colors.white),
+                                            TextStyle(color: BlackColor),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide:
-                                              BorderSide(color: Colors.white),
+                                              BorderSide(color: BlackColor),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide:
                                               BorderSide(color: LightBlueColor),
                                             ),
+                                            errorStyle: TextStyle(color: DarkBlueColor,fontWeight: FontWeight.bold),
                                             labelText: 'نام خانوادگی',
                                             helperText: "الزامی",
                                             helperStyle:
-                                            TextStyle(color: Colors.white),
+                                            TextStyle(color: BlackColor),
                                           ),
-                                          style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
+                                          style: TextStyle(color: BlackColor,fontFamily: IranSansWeb,),
                                           onChanged: (value) {
                                             _last_name = value;
                                           },
@@ -205,31 +208,31 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         child: TextFormField(
                                           decoration: InputDecoration(
                                             suffixIcon: Icon(
-                                              Icons.table_bar_outlined,
-                                              color: Colors.white,
+                                              Icons.person_pin_circle_outlined,
+                                              color: BlackColor,
                                             ),
                                             border: OutlineInputBorder(),
                                             labelStyle:
-                                            TextStyle(color: Colors.white),
+                                            TextStyle(color: BlackColor),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide:
-                                              BorderSide(color: Colors.white),
+                                              BorderSide(color: BlackColor),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide:
                                               BorderSide(color: LightBlueColor),
                                             ),
-                                            errorStyle: TextStyle(color: LightBlueColor,fontWeight: FontWeight.bold),
+                                            errorStyle: TextStyle(color: DarkBlueColor,fontWeight: FontWeight.bold),
                                             labelText: "کد ملی",
                                             helperText: "* الزامی",
                                             helperStyle:
-                                            TextStyle(color: Colors.white),
+                                            TextStyle(color: BlackColor),
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: <TextInputFormatter>[
                                             FilteringTextInputFormatter.digitsOnly
                                           ],
-                                          style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
+                                          style: TextStyle(color: BlackColor,fontFamily: IranSansWeb,),
                                           onChanged: (value) {
                                             _code_meli = int.parse(value);
                                           },
@@ -246,31 +249,31 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         child: TextFormField(
                                           decoration: InputDecoration(
                                             suffixIcon: Icon(
-                                              Icons.table_bar_outlined,
-                                              color: Colors.white,
+                                              Icons.phone_android_outlined,
+                                              color: BlackColor,
                                             ),
                                             border: OutlineInputBorder(),
                                             labelStyle:
-                                            TextStyle(color: Colors.white),
+                                            TextStyle(color: BlackColor),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide:
-                                              BorderSide(color: Colors.white),
+                                              BorderSide(color: BlackColor),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide:
                                               BorderSide(color: LightBlueColor),
                                             ),
-                                            errorStyle: TextStyle(color: LightBlueColor,fontWeight: FontWeight.bold),
+                                            errorStyle: TextStyle(color: DarkBlueColor,fontWeight: FontWeight.bold),
                                             labelText: "شماره تلفن همراه",
                                             helperText: "* الزامی",
                                             helperStyle:
-                                            TextStyle(color: Colors.white),
+                                            TextStyle(color: BlackColor),
                                           ),
                                           keyboardType: TextInputType.number,
                                           inputFormatters: <TextInputFormatter>[
                                             FilteringTextInputFormatter.digitsOnly
                                           ],
-                                          style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
+                                          style: TextStyle(color: BlackColor,fontFamily: IranSansWeb,),
                                           onChanged: (value) {
                                             _phone_number = value;
                                           },
@@ -295,15 +298,15 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         child: TextFormField(
                                           decoration: InputDecoration(
                                             suffixIcon: Icon(
-                                              Icons.phone_android_outlined,
-                                              color: Colors.white,
+                                              Icons.email_outlined,
+                                              color: BlackColor,
                                             ),
                                             border: OutlineInputBorder(),
                                             labelStyle:
-                                            TextStyle(color: Colors.white),
+                                            TextStyle(color: BlackColor),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide:
-                                              BorderSide(color: Colors.white),
+                                              BorderSide(color: BlackColor),
                                             ),
                                             focusedBorder: OutlineInputBorder(
                                               borderSide:
@@ -312,9 +315,9 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             labelText: 'ایمیل',
                                             helperText: "* اختیاری",
                                             helperStyle:
-                                            TextStyle(color: Colors.white),
+                                            TextStyle(color: BlackColor),
                                           ),
-                                          style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
+                                          style: TextStyle(color: BlackColor,fontFamily: IranSansWeb,),
                                           onChanged: (value) {
                                             _email = value;
                                           },
@@ -326,14 +329,14 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             decoration: InputDecoration(
                                               suffixIcon: Icon(
                                                 Icons.phone,
-                                                color: Colors.white,
+                                                color: BlackColor,
                                               ),
                                               border: OutlineInputBorder(),
                                               labelStyle:
-                                              TextStyle(color: Colors.white),
+                                              TextStyle(color: BlackColor),
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide:
-                                                BorderSide(color: Colors.white),
+                                                BorderSide(color: BlackColor),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderSide:
@@ -343,9 +346,9 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                               labelText: "شماره تلفن ثابت",
                                               helperText: "* اختیاری",
                                               helperStyle:
-                                              TextStyle(color: Colors.white),
+                                              TextStyle(color: BlackColor),
                                             ),
-                                            style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
+                                            style: TextStyle(color: BlackColor,fontFamily: IranSansWeb,),
                                             keyboardType: TextInputType.number,
                                             inputFormatters: <TextInputFormatter>[
                                               FilteringTextInputFormatter.digitsOnly
@@ -358,39 +361,66 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   ),
                                   SizedBox(height: 24.0.h),
                                   //button to submit the form
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width / 4,
-                                    height: 60.h,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: LightBlueColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20.0),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width / 5,
+                                        height: 60.h,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: LightBlueColor,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(20.0),
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            if (_formKey.currentState!.validate()) {
+                                              userId = widget.Id;
+                                              User user = User(
+                                                id: userId,
+                                                first_name: _first_name,
+                                                last_name: _last_name,
+                                                home_number: _home_number,
+                                                phone_number: _phone_number,
+                                                code_meli: _code_meli.toString(),
+                                                email: _email,
+                                              );
+
+                                              await _viewModel.editUser(user);
+                                              Get.toNamed(HomePage,
+                                                  arguments: userId);
+                                            }
+                                          },
+                                          child: Text(
+                                            'ثبت اطلاعات',
+                                            style: TextStyle(color: Colors.black),
+                                          ),
                                         ),
                                       ),
-                                      onPressed: () async {
-                                        if (_formKey.currentState!.validate()) {
-                                          userId = widget.Id;
-                                          User user = User(
-                                            id: userId,
-                                            first_name: _first_name,
-                                            last_name: _last_name,
-                                            home_number: _home_number,
-                                            phone_number: _phone_number,
-                                            code_meli: _code_meli.toString(),
-                                            email: _email,
-                                          );
-
-                                          await _viewModel.editUser(user);
-                                          Get.toNamed(HomePage,
-                                              arguments: userId);
-                                        }
-                                      },
-                                      child: Text(
-                                        'ثبت اطلاعات',
-                                        style: TextStyle(color: Colors.black),
+                                      SizedBox(
+                                        width:
+                                        MediaQuery.of(context).size.width / 5,
+                                        height: 60.h,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: LightBlueColor,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(20.0),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Get.toNamed(HomePage,
+                                                arguments: widget.Id);
+                                          },
+                                          child: Text(
+                                            'انصراف',
+                                            style: TextStyle(color: Colors.black),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ],
                               ),
