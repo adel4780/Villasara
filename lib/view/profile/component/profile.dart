@@ -368,7 +368,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           borderRadius: BorderRadius.circular(20.0),
                                         ),
                                       ),
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
                                           userId = widget.Id;
                                           User user = User(
@@ -380,8 +380,8 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             code_meli: _code_meli.toString(),
                                             email: _email,
                                           );
-                                          //TODO add adduser api
-                                          
+
+                                          await _viewModel.editUser(user);
                                           Get.toNamed(HomePage,
                                               arguments: userId);
                                         }

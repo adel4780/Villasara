@@ -26,7 +26,7 @@ class UserViewModel extends ChangeNotifier {
     notifyListeners();
     return newUser;
   }
-  void editUser(User user) async {
+  Future<void> editUser(User user) async {
     repository.editUser(user);
     notifyListeners();
   }
