@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../utils/constants.dart';
+import '../login&signUp/components/login&signUp.dart';
 import 'HF_style.dart';
 
 class Header extends StatelessWidget {
@@ -41,20 +42,20 @@ class Header extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 GestureDetector(onTap: (){/*Get.toNamed(MaskGroupPage);*/}, child: HTextStyle(text: 'خانه',),),
-                GestureDetector(onTap: (){/*Get.toNamed(RulesPage);*/}, child: HTextStyle(text: 'قوانین',),),
-                GestureDetector(onTap: (){/*Get.toNamed(AboutPage);*/}, child: HTextStyle(text: 'درباره ما',),),
-                GestureDetector(onTap: (){/*Get.toNamed(ContactUsPage);*/}, child: HTextStyle(text: 'ارتباط با ما',),),
+                GestureDetector(onTap: (){Get.toNamed(RulesPage);}, child: HTextStyle(text: 'قوانین',),),
+                GestureDetector(onTap: (){Get.toNamed(AboutPage);}, child: HTextStyle(text: 'درباره ما',),),
+                GestureDetector(onTap: (){Get.toNamed(ContactUsPage);}, child: HTextStyle(text: 'ارتباط با ما',),),
                 SizedBox(
                   width: 257.0.w,
                   height: 72.0.h,
                   child: ElevatedButton(
                     onPressed: () async {
-                      /*final String? phoneNumber = await showDialog<String>(
+                      final String? phoneNumber = await showDialog<String>(
                         context: context,
                         builder: (BuildContext context) {
                           return PhoneNumberDialog();
                         },
-                      );*/
+                      );
                     },
                     style: buttonStyle_build(257, 72, 10, LightBlueColor),
                     child: HTextStyle(text: 'ورود / عضویت',),
