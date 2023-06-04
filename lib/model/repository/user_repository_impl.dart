@@ -1,93 +1,93 @@
-import '../../model/entity/owner.dart';
+import '../../model/entity/user.dart';
 import 'package:dio/dio.dart';
 import '../util/constants.dart';
-import 'owner_repository.dart';
+import 'user_repository.dart';
 
 
-class OwnerRepositoryImpl extends OwnerRepository {
+class UserRepositoryImpl extends UserRepository {
   var dio = Dio(options);
 
   @override
-  Future<List<Owner>> getOwners() async {
-    var response = await dio.get('owners/');
+  Future<List<User>> getUsers() async {
+    var response = await dio.get('users/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
-      List<Owner> owners = [];
+      List<User> users = [];
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
-          var owner = Owner.fromJson(data);
-          owners.add(owner);
+          var user = User.fromJson(data);
+          users.add(user);
         }
       }
-      return owners;
+      return users;
     } else {
       throw Exception('Invalid response');
     }
   }
   @override
-  Future<List<Owner>> searchOwners(int id)  async {
-    var response = await dio.get('owners/');
+  Future<List<User>> searchUsers(int id)  async {
+    var response = await dio.get('users/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
-      List<Owner> owners = [];
+      List<User> users = [];
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
-          var owner = Owner.fromJson(data);
-          if(owner.id == id) {
-            owners.add(owner);
+          var user = User.fromJson(data);
+          if(user.id == id) {
+            users.add(user);
           }
         }
       }
-      return owners;
+      return users;
     } else {
       throw Exception('Invalid response');
     }
   }
   @override
-  Future<List<Owner>> searchPhone(String Phone) async{
-    var response = await dio.get('owners/');
+  Future<List<User>> searchPhone(String Phone) async{
+    var response = await dio.get('users/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
-      List<Owner> owners = [];
+      List<User> users = [];
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
-          var owner = Owner.fromJson(data);
-          if(owner.phone_number == Phone) {
-            owners.add(owner);
+          var user = User.fromJson(data);
+          if(user.phone_number == Phone) {
+            users.add(user);
           }
         }
       }
-      return owners;
+      return users;
     } else {
       throw Exception('Invalid response');
     }
   }
   @override
-  Future<Owner> addOwner(Owner owner) async {
+  Future<User> addUser(User user) async {
     var response = await dio.post(
-      'owners/',
-      data: owner,
+      'users/',
+      data: user,
     );
     print('response: ${response.statusMessage}');
     print('response: ${response.data}');
-    final newOwner = Owner.fromJson(response.data);
-    return newOwner;
+    final newUser = User.fromJson(response.data);
+    return newUser;
   }
   @override
-  Future<void> editOwner(Owner owner) async {
+  Future<void> editUser(User user) async {
     var response = await dio.patch(
-      'owners/${owner.id}/',
-      data: owner,
+      'users/${user.id}/',
+      data: user,
     );
     print('response: ${response.statusMessage}');
   }
   @override
-  Future<void> deleteOwner(Owner owner) async {
+  Future<void> deleteUser(User user) async {
     var response = await dio.delete(
-      'owners/${owner.id}/',
+      'users/${user.id}/',
     );
     print('response: ${response.statusMessage}');
   }

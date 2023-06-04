@@ -5,8 +5,8 @@ import '../../../utils/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import '../../../model/entity/owner.dart';
-import '../../../view_model/owner_viewmodel.dart';
+import '../../../model/entity/user.dart' as u;
+import '../../../view_model/user_viewmodel.dart';
 
 class ConfirmationDialog extends StatefulWidget {
   String? role;
@@ -41,8 +41,8 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   Timer? _timer;
   int _resendSeconds = 100;
 
-  final _viewModel = OwnerViewModel();
-  final List<Owner> _owners = [];
+  final _viewModel = UserViewModel();
+  final List<u.User> _users = [];
 
   @override
   void initState() {
@@ -104,19 +104,19 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     // print(code);
     // code to verify the confirmation code entered by the user
     _viewModel.searchPhone(widget.phoneNumber!);
-    _viewModel.owners.stream.listen((list) async {
+    _viewModel.users.stream.listen((list) async {
       setState(() {
-        _owners.addAll(list);
+        _users.addAll(list);
       });
-      if(_owners.isNotEmpty){
-        for (Owner i in _owners) {
+      if(_users.isNotEmpty){
+        for (u.User i in _users) {
             id = i.id;
         }
       } else {
-        Owner owner = await Owner(phone_number: widget.phoneNumber,first_name: "",last_name: "");
+        u.User user = await u.User(phone_number: widget.phoneNumber,first_name: "",last_name: "");
         await Future.delayed(const Duration(seconds: 5));
-        owner = await _viewModel.addOwner(owner);
-        id = owner.id;
+        user = await _viewModel.addUser(user);
+        id = user.id;
       }
       Get.toNamed(HomePage, arguments: id);
     });
