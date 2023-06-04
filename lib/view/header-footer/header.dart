@@ -53,7 +53,7 @@ class Header extends StatelessWidget {
                       final String? phoneNumber = await showDialog<String>(
                         context: context,
                         builder: (BuildContext context) {
-                          return PhoneNumberDialog();
+                          return PhoneNumberDialog(role: '',);
                         },
                       );
                     },
