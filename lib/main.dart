@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:material_color_gen/material_color_gen.dart';
 import 'package:villasara_front_end/utils/constants.dart';
+import 'view/car/aboutUs.dart';
+import 'view/car/contact.dart';
+import 'view/car/rules.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -21,9 +24,9 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           getPages: [
             //GetPage(name: MaskGroupPage, page: () => MaskGroupScreen()),
-            //GetPage(name: RulesPage, page: () => RulesScreen()),
-            //GetPage(name: AboutPage, page: () => AboutScreen()),
-            //GetPage(name: ContactUsPage, page: () => ContactUsScreen()),
+            GetPage(name: RulesPage, page: () => RulesScreen()),
+            GetPage(name: AboutPage, page: () => AboutScreen()),
+            GetPage(name: ContactUsPage, page: () => ContactUsScreen()),
             //GetPage(name: HomePage, page: () => HomeScreen()),
             //GetPage(name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
             //GetPage(name: EditOwnerRegisterPage, page: () => EditOwenerRegisterScreen()),
