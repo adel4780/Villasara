@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../utils/constants.dart';
+import '../../../utils/constants.dart';
 // import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,7 +44,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                     borderSide: BorderSide(color: Colors.black),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: YellowColor),
+                    borderSide: BorderSide(color: LightBlueColor),
                   ),
                   labelText: "شماره تلفن همراه",
                   helperText: "شماره با ۹ شروع می‌شود",
@@ -81,7 +81,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: YellowColor,
+                backgroundColor: DarkBlueColor,
                 fixedSize: Size.fromWidth(150),
               ),
               onPressed: () async {
