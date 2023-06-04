@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../../../utils/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../login&signUp/components/login&signUp.dart';
 
-class PhoneNumberDialog extends StatefulWidget {
+class ChooseUserDialog extends StatefulWidget {
   @override
-  _PhoneNumberDialogState createState() => _PhoneNumberDialogState();
+  _ChooseUserDialogState createState() => _ChooseUserDialogState();
 }
 
-class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
-  late String _phoneController = "";
+class _ChooseUserDialogState extends State<ChooseUserDialog> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -17,7 +17,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
     return AlertDialog(
       contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       title: Text(
-        "ورود یا عضویت",
+        "انتخاب کاربر",
         style: TextStyle(fontFamily: IranSansWeb),
       ),
       content: SizedBox(
@@ -36,7 +36,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return PhoneNumberDialog();
+                      return PhoneNumberDialog(role: "host");
                     },
                   );
                 },
@@ -58,7 +58,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return PhoneNumberDialog();
+                        return PhoneNumberDialog(role: "guest",);
                       });
                 },
                 child: Text(
