@@ -9,10 +9,11 @@ import '../../../model/entity/owner.dart';
 import '../../../view_model/owner_viewmodel.dart';
 
 class ConfirmationDialog extends StatefulWidget {
+  String? role;
   String? phoneNumber;
   final verificationId;
 
-  ConfirmationDialog({required this.phoneNumber,required this.verificationId});
+  ConfirmationDialog({required this.phoneNumber,required this.verificationId,required this.role,});
   @override
   _ConfirmationDialogState createState() => _ConfirmationDialogState();
 }
@@ -87,6 +88,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
               return ConfirmationDialog(
                 phoneNumber: '+${widget.phoneNumber}',
                 verificationId: verificationId,
+                role: widget.role,
               );
             },
           );

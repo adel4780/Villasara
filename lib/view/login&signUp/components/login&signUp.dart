@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/constants.dart';
-// import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
+import '../../../view/verifyCode/components/verifyCode.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PhoneNumberDialog extends StatefulWidget {
+  String? role;
+  PhoneNumberDialog({required this.role});
   @override
   _PhoneNumberDialogState createState() => _PhoneNumberDialogState();
 }
@@ -97,15 +99,16 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                         },
                         codeSent: ((String verificationId,int? resendToken) async{
                           await Future.delayed(Duration(seconds: 2));
-                          // showDialog(
-                          //   context: context,
-                          //   builder: (BuildContext context) {
-                          //     return ConfirmationDialog(
-                          //       phoneNumber: '+98${_phoneController}',
-                          //       verificationId: verificationId,
-                          //     );
-                          //   },
-                          // );
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ConfirmationDialog(
+                                phoneNumber: '+98${_phoneController}',
+                                verificationId: verificationId,
+                                role: widget.role,
+                              );
+                            },
+                          );
                         }),
                         codeAutoRetrievalTimeout: (String verificationId){}
                     );
