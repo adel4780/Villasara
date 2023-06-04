@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:villasara_front_end/view/chooseUser/component/chooseUser.dart';
 import '../../utils/constants.dart';
-import '../login&signUp/components/login&signUp.dart';
 import 'HF_style.dart';
 
 class Header extends StatelessWidget {
@@ -53,7 +53,7 @@ class Header extends StatelessWidget {
                       final String? phoneNumber = await showDialog<String>(
                         context: context,
                         builder: (BuildContext context) {
-                          return PhoneNumberDialog(role: '',);
+                          return ChooseUserDialog();
                         },
                       );
                     },
