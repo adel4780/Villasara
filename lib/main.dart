@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:material_color_gen/material_color_gen.dart';
 import 'package:villasara_front_end/utils/constants.dart';
+import 'package:villasara_front_end/view/profile/component/profile.dart';
 import 'view/car/aboutUs.dart';
 import 'view/car/contact.dart';
 import 'view/car/rules.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: RulesPage, page: () => RulesScreen()),
             GetPage(name: AboutPage, page: () => AboutScreen()),
             GetPage(name: ContactUsPage, page: () => ContactUsScreen()),
+            GetPage(name: ProfilePage, page: () => UserRegisterScreen()),
             //GetPage(name: HomePage, page: () => HomeScreen()),
             //GetPage(name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
             //GetPage(name: EditOwnerRegisterPage, page: () => EditOwenerRegisterScreen()),
