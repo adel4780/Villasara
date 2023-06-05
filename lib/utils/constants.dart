@@ -36,7 +36,7 @@ String ENamad = "assets/images/enamad.png";
 String Map = "assets/images/map.png";
 String Tick = "assets/images/Tick.png";
 String Zabdar = "assets/images/zabdar.png";
-
+String Purchase = "assets/images/purchase.jpg";
 // Fonts
 String IranSansWeb = "IranSansWeb";
 String FugazOne = "FugazOne";
