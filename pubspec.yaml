@@ -81,6 +81,8 @@ flutter:
     - assets/images/Tick.png
     - assets/images/zabdar.png
     - assets/images/purchase.jpg
+    - assets/images/villaBackground.jpg
+    
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
