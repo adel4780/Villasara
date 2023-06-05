@@ -7,6 +7,8 @@ import 'package:villasara_front_end/view/profile/component/profile.dart';
 import 'view/car/aboutUs.dart';
 import 'view/car/contact.dart';
 import 'view/car/rules.dart';
+import 'view/purchase/successful.dart';
+import 'view/purchase/unSuccessful.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -33,8 +35,8 @@ class MyApp extends StatelessWidget {
             //GetPage(name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
             //GetPage(name: EditOwnerRegisterPage, page: () => EditOwenerRegisterScreen()),
             //GetPage(name: ProfilePage, page: () => EditProfileDialog(),),
-            //GetPage(name: SuccessfulPurchasePage, page: () => SuccessfulPurchaseScreen()),
-            //GetPage(name: UnSuccessfulPurchasePage, page: () => UnSuccessfulPurchaseScreen()),
+            GetPage(name: SuccessfulPurchasePage, page: () => SuccessfulPurchaseScreen()),
+            GetPage(name: UnSuccessfulPurchasePage, page: () => UnSuccessfulPurchaseScreen()),
           ],
           //initialRoute: ,
           textDirection: TextDirection.rtl,
