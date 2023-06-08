@@ -82,6 +82,7 @@ flutter:
     - assets/images/zabdar.png
     - assets/images/purchase.jpg
     - assets/images/villaBackground.jpg
+    - assets/images/villa_img.png
     
   # To add assets to your application, add an assets section, like this:
   # assets:
