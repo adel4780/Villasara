@@ -39,7 +39,7 @@ String Tick = "assets/images/Tick.png";
 String Zabdar = "assets/images/zabdar.png";
 String Purchase = "assets/images/purchase.jpg";
 String VillaBack = "assets/images/villaBackground.jpg";
-
+String MaskGroupimg = "assets/images/maskPage.png";
 // Fonts
 String IranSansWeb = "IranSansWeb";
 String FugazOne = "FugazOne";
