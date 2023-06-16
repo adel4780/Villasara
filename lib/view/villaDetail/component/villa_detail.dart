@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:villasara_front_end/utils/constants.dart';
 import '../../header-footer/footer.dart';
-import '../../header-footer/header.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
+import '../../header-footer/header_panel.dart';
+
 class VillaDetail extends StatefulWidget {
-  const VillaDetail({super.key});
+  VillaDetail({super.key});
+
+  var parameters = Get.arguments;
 
   @override
   State<VillaDetail> createState() => _VillaDetailState();
 }
 
 class _VillaDetailState extends State<VillaDetail> {
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,8 +26,8 @@ class _VillaDetailState extends State<VillaDetail> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Header(),
-            Detail(),
+            HeaderPanel(ID: widget.parameters[0]),
+            Detail(/*villa : widget.parameters[1]*/),
             Footer(),
           ],
         ),

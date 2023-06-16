@@ -8,11 +8,11 @@ import '../../../model/entity/user.dart';
 import '../../header-footer/footer.dart';
 import '../../../utils/constants.dart';
 import '../../../view_model/user_viewmodel.dart';
+import '../../header-footer/header_panel.dart';
 
 class UserRegisterScreen extends StatefulWidget {
   UserRegisterScreen({Key? key}) : super(key: key);
-  // var ID = Get.arguments;
-  var ID = 2;
+  var ID = Get.arguments;
 
   @override
   _UserRegisterScreen createState() => _UserRegisterScreen();
@@ -27,7 +27,7 @@ class _UserRegisterScreen extends State<UserRegisterScreen> {
           child: Container(
             child: Column(
               children: [
-                // HeaderPanel(ID : widget.ID),
+                HeaderPanel(ID : widget.ID),
                 OwnerRegister(
                   Id: widget.ID,
                 ),
