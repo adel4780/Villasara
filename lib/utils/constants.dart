@@ -17,6 +17,7 @@ String HomePage = "/homePage";
 String SuccessfulPurchasePage = "/successfulPurchasePage";
 String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
 String ProfilePage = "/profilepage";
+String VillaDetailPage = "/villaDetailPage";
 
 //Strings, Names, Address
 String AppName = "ویلا سرا";
@@ -40,6 +41,7 @@ String Zabdar = "assets/images/zabdar.png";
 String Purchase = "assets/images/purchase.jpg";
 String VillaBack = "assets/images/villaBackground.jpg";
 String MaskGroupimg = "assets/images/maskPage.png";
+String EmptyImg = "assets/images/emptyImage.png";
 // Fonts
 String IranSansWeb = "IranSansWeb";
 String FugazOne = "FugazOne";
