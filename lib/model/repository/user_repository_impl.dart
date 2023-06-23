@@ -5,7 +5,6 @@ import 'user_repository.dart';
 
 
 class UserRepositoryImpl extends UserRepository {
-  var dio = Dio(options);
 
   @override
   Future<List<User>> getUsers() async {
@@ -91,8 +90,5 @@ class UserRepositoryImpl extends UserRepository {
     );
     print('response: ${response.statusMessage}');
   }
-
-
-
 
 }

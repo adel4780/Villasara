@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 // Colors
 const Color WhiteColor = Color(0xFFFFFFFF);
 const Color BlackColor = Color(0xff000000);
@@ -17,6 +17,7 @@ String HomePage = "/homePage";
 String SuccessfulPurchasePage = "/successfulPurchasePage";
 String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
 String ProfilePage = "/profilepage";
+String VillaDetailPage = "/villaDetailPage";
 
 //Strings, Names, Address
 String AppName = "ویلا سرا";
@@ -40,6 +41,7 @@ String Zabdar = "assets/images/zabdar.png";
 String Purchase = "assets/images/purchase.jpg";
 String VillaBack = "assets/images/villaBackground.jpg";
 String MaskGroupimg = "assets/images/maskPage.png";
+String EmptyImg = "assets/images/emptyImage.png";
 // Fonts
 String IranSansWeb = "IranSansWeb";
 String FugazOne = "FugazOne";
@@ -132,6 +134,33 @@ Widget phraseStyle(String text) {
       overflow: TextOverflow.ellipsis,
     ),
     child: SelectableText(text, textAlign: TextAlign.justify,
+    ),
+  );
+}
+Widget loading(){
+  return Container(
+    padding: EdgeInsets.only(
+      left: 150.0.w,
+      top: 51.0.h,
+      right: 150.0.w,
+    ),
+    width: 1920.w,
+    height: 700.h,
+    child: Center(
+      child: SpinKitCircle(
+        size: 140.r,
+        duration: Duration(seconds: 2),
+        itemBuilder: (context, index){
+          final colors = [LightBlueColor, DarkBlueColor];
+          final color = colors[index % colors.length];
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+            ),
+          );
+        },
+      ),
     ),
   );
 }
