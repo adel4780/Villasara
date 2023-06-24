@@ -10,14 +10,14 @@ import '../../model/entity/villa.dart';
 import '../../utils/constants.dart';
 import '../header-footer/footer.dart';
 import '../header-footer/header.dart';
-class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key);
   var Id = Get.arguments;
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   var _gotFromServer = false;
   late List<Villa> villas = [];
   late List<VillaImage> villaImage = [];

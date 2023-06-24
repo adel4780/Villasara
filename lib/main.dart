@@ -8,6 +8,7 @@ import 'package:villasara_front_end/view/profile/component/profile.dart';
 import 'view/car/aboutUs.dart';
 import 'view/car/contact.dart';
 import 'view/car/rules.dart';
+import 'view/homepage/home-page.dart';
 import 'view/maskgroup/components/maskGroup.dart';
 import 'view/purchase/successful.dart';
 import 'view/purchase/unSuccessful.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: AboutPage, page: () => AboutScreen()),
             GetPage(name: ContactUsPage, page: () => ContactUsScreen()),
             GetPage(name: ProfilePage, page: () => UserRegisterScreen()),
-            //GetPage(name: HomePage, page: () => HomeScreen()),
+            GetPage(name: HomePage, page: () => HomeScreen()),
             //GetPage(name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
             //GetPage(name: EditOwnerRegisterPage, page: () => EditOwenerRegisterScreen()),
             //GetPage(name: ProfilePage, page: () => EditProfileDialog(),),
