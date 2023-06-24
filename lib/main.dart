@@ -15,6 +15,7 @@ import 'view/purchase/successful.dart';
 import 'view/purchase/unSuccessful.dart';
 
 import 'firebase_options.dart';
+import 'view/villaLists/villa-list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
             GetPage(name: ProfilePage, page: () => UserRegisterScreen()),
             GetPage(name: VillaRegistrationPage, page: () => VillaRegisterScreen()),
             GetPage(name: HomePage, page: () => HomeScreen()),
-            //GetPage(name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
+            GetPage(name: OwnerRegisterPage, page: () => UserRegisterScreen()),
+            GetPage(name: VillaListPage, page: () => MyVillaScreen()),
             //GetPage(name: EditOwnerRegisterPage, page: () => EditOwenerRegisterScreen()),
             //GetPage(name: ProfilePage, page: () => EditProfileDialog(),),
             GetPage(name: SuccessfulPurchasePage, page: () => SuccessfulPurchaseScreen()),

@@ -26,7 +26,7 @@ class _VillaDetailState extends State<VillaDetail> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HeaderPanel(ID: widget.parameters[0]),
+            HeaderPanel(user: widget.parameters[0]),
             Detail(/*villa : widget.parameters[1]*/),
             Footer(),
           ],
