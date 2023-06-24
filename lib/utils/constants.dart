@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 // Colors
 const Color WhiteColor = Color(0xFFFFFFFF);
 const Color BlackColor = Color(0xff000000);
@@ -18,6 +18,7 @@ String SuccessfulPurchasePage = "/successfulPurchasePage";
 String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
 String ProfilePage = "/profilepage";
 String VillaRegistrationPage = "/villaregistrationpage";
+String VillaDetailPage = "/villaDetailPage";
 
 //Strings, Names, Address
 String AppName = "ویلا سرا";
@@ -41,6 +42,7 @@ String Zabdar = "assets/images/zabdar.png";
 String Purchase = "assets/images/purchase.jpg";
 String VillaBack = "assets/images/villaBackground.jpg";
 String MaskGroupimg = "assets/images/maskPage.png";
+String EmptyImg = "assets/images/emptyImage.png";
 // Fonts
 String IranSansWeb = "IranSansWeb";
 String FugazOne = "FugazOne";
@@ -51,6 +53,40 @@ String AboutUsPhrase =
 String RulesPhrase =
     "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه \nروزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود\n ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را\n می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی \nایجاد کرد."
 ;
+
+List<String> Proviences = [
+  'آذربایجان شرقی',
+  'آذربایجان غربی',
+  'اردبیل',
+  'اصفهان',
+  'البرز',
+  'ایلام',
+  'بوشهر',
+  'تهران',
+  'چهارمحال و بختیاری',
+  'خراسان جنوبی',
+  'خراسان رضوی',
+  'خراسان شمالی',
+  'خوزستان',
+  'زنجان',
+  'سمنان',
+  'سیستان و بلوچستان',
+  'فارس',
+  'قزوین',
+  'قم',
+  'کردستان',
+  'کرمان',
+  'کرمانشاه',
+  'کهکیلویه و بویراحمد',
+  'گلستان',
+  'گیلان',
+  'لرستان',
+  'مازندران',
+  'مرکزی',
+  'هرمزگان',
+  'همدان',
+  'یزد'
+];
 
 ButtonStyle buttonStyle_build(int width, int height, int radius,Color color){
   return ButtonStyle(
@@ -136,36 +172,30 @@ Widget phraseStyle(String text) {
     ),
   );
 }
-List<String> Proviences = [
-  'آذربایجان شرقی',
-  'آذربایجان غربی',
-  'اردبیل',
-  'اصفهان',
-  'البرز',
-  'ایلام',
-  'بوشهر',
-  'تهران',
-  'چهارمحال و بختیاری',
-  'خراسان جنوبی',
-  'خراسان رضوی',
-  'خراسان شمالی',
-  'خوزستان',
-  'زنجان',
-  'سمنان',
-  'سیستان و بلوچستان',
-  'فارس',
-  'قزوین',
-  'قم',
-  'کردستان',
-  'کرمان',
-  'کرمانشاه',
-  'کهکیلویه و بویراحمد',
-  'گلستان',
-  'گیلان',
-  'لرستان',
-  'مازندران',
-  'مرکزی',
-  'هرمزگان',
-  'همدان',
-  'یزد'
-];
+Widget loading(){
+  return Container(
+    padding: EdgeInsets.only(
+      left: 150.0.w,
+      top: 51.0.h,
+      right: 150.0.w,
+    ),
+    width: 1920.w,
+    height: 700.h,
+    child: Center(
+      child: SpinKitCircle(
+        size: 140.r,
+        duration: Duration(seconds: 2),
+        itemBuilder: (context, index){
+          final colors = [LightBlueColor, DarkBlueColor];
+          final color = colors[index % colors.length];
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+            ),
+          );
+        },
+      ),
+    ),
+  );
+}
