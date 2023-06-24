@@ -17,6 +17,7 @@ String HomePage = "/homePage";
 String SuccessfulPurchasePage = "/successfulPurchasePage";
 String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
 String ProfilePage = "/profilepage";
+String VillaRegistrationPage = "/villaregistrationpage";
 String VillaDetailPage = "/villaDetailPage";
 
 //Strings, Names, Address
