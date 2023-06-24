@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import '../../../model/entity/owner.dart';
 import '../../../model/entity/villa.dart';
 import '../../../view_model/villa_viewmodel.dart';
 import '../../header-footer/footer.dart';
@@ -13,7 +14,7 @@ import '../../header-footer/header_panel.dart';
 
 class VillaRegisterScreen extends StatefulWidget {
   VillaRegisterScreen({Key? key}) : super(key: key);
-  var ID = 1;
+  Owner user = Get.arguments;
 
   @override
   _VillaRegisterScreen createState() => _VillaRegisterScreen();
@@ -28,9 +29,9 @@ class _VillaRegisterScreen extends State<VillaRegisterScreen> {
           child: Container(
             child: Column(
               children: [
-                HeaderPanel(ID: widget.ID),
+                HeaderPanel(user: widget.user),
                 VillaRegister(
-                  Id: widget.ID,
+                  Id: widget.user.id,
                 ),
                 SizedBox(height: 32.r),
                 Footer(),
