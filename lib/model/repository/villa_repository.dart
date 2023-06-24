@@ -2,9 +2,13 @@ import '../entity/image.dart';
 import '../entity/villa.dart';
 
 abstract class VillaRepository{
-  Future<List<Villa>> getVillas(int businessOwnerId);
+  Future<List<Villa>> getVillas();
 
-  Future<List<VillaImage>> getImages(int id);
+  Future<List<VillaImage>> getImages();
+
+  Future<List<Villa>> searchVillas(int businessOwnerId);
+
+  Future<List<VillaImage>> searchImages(int id);
 
   Future<Villa> addVilla(Villa villa);
 

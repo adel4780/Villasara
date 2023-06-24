@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:villasara_front_end/view/header-footer/header_panel.dart';
 import 'package:villasara_front_end/view_model/villa_viewmodel.dart';
-import '../../model/entity/image.dart';
 import '../../model/entity/villa.dart';
 import '../../utils/constants.dart';
 import '../header-footer/footer.dart';
-import '../header-footer/header.dart';
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
-  var Id = Get.arguments;
+  //var Id = Get.arguments;
+  var Id = 1;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -20,11 +20,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var _gotFromServer = false;
   late List<Villa> villas = [];
-  late List<VillaImage> villaImage = [];
   final villaViewModel = VillaViewModel();
   @override
   void initState() {
-    loadData();
+      List<Villa> villa = [];
+      loadData();
+      villa.clear();
+    if(villas.isNotEmpty){
+      _gotFromServer = true;
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Header(),
+              HeaderPanel(ID: widget.Id),
               putHomeImage(),
               _gotFromServer != null
               ? showVillaList()
@@ -65,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
   Widget showVillaList() {
     return ListView(
       scrollDirection: Axis.horizontal,
@@ -227,21 +232,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
   void loadData() {
-    villaViewModel.getVillas(widget.Id);
-    villaViewModel.getImage(widget.Id);
+    villaViewModel.getVillas();
+    villaViewModel.getImage();
     villaViewModel.villas.stream.listen((listVillas) {
       villaViewModel.Images.stream.listen((listImages) {
         setState(() {
-          _gotFromServer = true;
           villas.addAll(listVillas);
-          for (var villa in villas) {
-            villa.images = [];
+          for (var item in villas) {
+            item.images = [];
             for (var image in listImages) {
-              if (image.villa == villa.id) {
-                villa.images!.add(image);
+              if (image.villa == item.id) {
+                item.images!.add(image);
               }
             }
           }
+          _gotFromServer = true;
         });
       });
     });
