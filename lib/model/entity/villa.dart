@@ -3,13 +3,14 @@ import 'image.dart';
 class Villa{
   int? id;
   int? villaOwner;
-  String? state;
+  int? state;
   String? city;
   String? region;
   String? address;
   String? description;
-  String? pricePerNight;
+  double? pricePerNight;
   List<VillaImage>? images;
+  String? createdAt;
 
   Villa({
     this.id,
@@ -21,6 +22,7 @@ class Villa{
     this.description,
     this.pricePerNight,
     this.images,
+    this.createdAt,
 });
   factory Villa.fromJson(Map<String, dynamic> json) {
     return Villa(
@@ -32,7 +34,7 @@ class Villa{
       address: json['address'],
       description: json['description'],
       pricePerNight: json['pricePerNight'],
-
+      createdAt: json['created_at']
     );
   }
   Map<String, dynamic> toJson() => {

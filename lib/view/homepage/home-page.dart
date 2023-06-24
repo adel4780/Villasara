@@ -11,8 +11,7 @@ import '../../utils/constants.dart';
 import '../header-footer/footer.dart';
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
-  //var Id = Get.arguments;
-  var Id = 1;
+  var user = Get.arguments;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -38,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              HeaderPanel(ID: widget.Id),
+              HeaderPanel(user: widget.user),
               putHomeImage(),
               _gotFromServer != null
               ? showVillaList()
@@ -117,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fit: BoxFit.cover,
                                   )
                                       : Image.memory(
-                                    base64.decode(villa.images!.first.image!),
+                                    base64.decode(villa.images![0].image!),
                                     fit: BoxFit.cover,
                                     width: 100,
                                     height: 100,
