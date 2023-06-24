@@ -1,4 +1,4 @@
-class User{
+class Owner{
   int? id;
   String? role;
   String? first_name;
@@ -10,9 +10,8 @@ class User{
 
 
 
-  User({
+  Owner({
     this.id,
-    this.role,
     required this.phone_number,
     this.first_name,
     this.last_name,
@@ -20,10 +19,9 @@ class User{
     this.email,
     this.home_number
   });
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory Owner.fromJson(Map<String, dynamic> json) {
+    return Owner(
       id: json["id"],
-      role: json["role"],
       phone_number: json["phone_number"],
       first_name: json["first_name"],
       last_name: json["last_name"],
@@ -34,7 +32,6 @@ class User{
     );
   }
   Map<String, dynamic> toJson()=> {
-    'role' : role,
     'phone_number':phone_number,
     'first_name' : first_name,
     'last_name' : last_name,

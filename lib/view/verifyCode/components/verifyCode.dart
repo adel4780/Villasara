@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../../model/entity/owner.dart';
+import '../../../model/entity/tenant.dart';
 import '../../../utils/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import '../../../model/entity/user.dart' as u;
-import '../../../view_model/user_viewmodel.dart';
+import '../../../view_model/owner_viewmodel.dart';
+import '../../../view_model/tenant_viewmodel.dart';
 
 class ConfirmationDialog extends StatefulWidget {
   String? role;
@@ -26,6 +28,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
       t4 = TextEditingController(),
       t5 = TextEditingController();
   int? id;
+  late bool TeOw;
   verifyOTP(String verificationId,String userOTP) async{
     FirebaseAuth auth = FirebaseAuth.instance;
     try{
@@ -41,12 +44,14 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   Timer? _timer;
   int _resendSeconds = 100;
 
-  final _viewModel = UserViewModel();
-  final List<u.User> _users = [];
-
+  final _ownerViewModel = OwnerViewModel();
+  final _tenantViewModel = TenantViewModel();
+  final List<Owner> _owners = [];
+  final List<Tenant> _tenants = [];
   @override
   void initState() {
     super.initState();
+
     _startResendTimer();
   }
 
@@ -101,25 +106,47 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   }
 
   void _confirmCode() {
-    // print(code);
-    // code to verify the confirmation code entered by the user
-    _viewModel.searchPhone(widget.phoneNumber!);
-    _viewModel.users.stream.listen((list) async {
-      setState(() {
-        _users.addAll(list);
-      });
-      if(_users.isNotEmpty){
-        for (u.User i in _users) {
-            id = i.id;
+    Owner owner = Owner(phone_number: "");
+    Tenant tenant = Tenant(phone_number: "");
+    if(widget.role == 'host'){
+      // print(code);
+      // code to verify the confirmation code entered by the user
+      _ownerViewModel.searchPhone(widget.phoneNumber!);
+      _ownerViewModel.owners.stream.listen((list) async {
+        setState(() {
+          _owners.addAll(list);
+        });
+        if(_owners.isNotEmpty){
+          for (var item in _owners) {
+            owner = item;
+          }
+        } else {
+          owner = await Owner(phone_number: widget.phoneNumber,first_name: "",last_name: "");
+          await Future.delayed(const Duration(seconds: 5));
+          owner = await _ownerViewModel.addOwner(owner);
         }
-      } else {
-        u.User user = await u.User(phone_number: widget.phoneNumber,first_name: "",last_name: "");
-        await Future.delayed(const Duration(seconds: 5));
-        user = await _viewModel.addUser(user);
-        id = user.id;
-      }
-      Get.toNamed(HomePage, arguments: id);
-    });
+        Get.toNamed(HomePage, arguments: owner);
+      });
+    }else{
+      // print(code);
+      // code to verify the confirmation code entered by the user
+      _tenantViewModel.searchPhone(widget.phoneNumber!);
+      _tenantViewModel.tenants.stream.listen((list) async {
+        setState(() {
+          _tenants.addAll(list);
+        });
+        if(_tenants.isNotEmpty){
+          for (var item in _tenants) {
+            tenant = item;
+          }
+        } else {
+          tenant = await Tenant(phone_number: widget.phoneNumber,first_name: "",last_name: "");
+          await Future.delayed(const Duration(seconds: 5));
+          tenant = await _tenantViewModel.addTenant(tenant);
+        }
+        Get.toNamed(HomePage, arguments: tenant);
+      });
+    }
   }
 
   @override

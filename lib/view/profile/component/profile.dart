@@ -4,21 +4,23 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../model/entity/user.dart';
+import '../../../model/entity/owner.dart';
+import '../../../model/entity/tenant.dart';
+import '../../../view_model/owner_viewmodel.dart';
 import '../../header-footer/footer.dart';
 import '../../../utils/constants.dart';
-import '../../../view_model/user_viewmodel.dart';
+import '../../../view_model/tenant_viewmodel.dart';
 import '../../header-footer/header_panel.dart';
 
 class UserRegisterScreen extends StatefulWidget {
   UserRegisterScreen({Key? key}) : super(key: key);
-  var ID = Get.arguments;
+  var user = Get.arguments;
 
   @override
   _UserRegisterScreen createState() => _UserRegisterScreen();
 }
 
-class _UserRegisterScreen extends State<UserRegisterScreen> {
+class _UserRegisterScreen extends State<UserRegisterScreen>{
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,9 +29,9 @@ class _UserRegisterScreen extends State<UserRegisterScreen> {
           child: Container(
             child: Column(
               children: [
-                HeaderPanel(ID : widget.ID),
+                HeaderPanel(user : widget.user),
                 OwnerRegister(
-                  Id: widget.ID,
+                  user: widget.user,
                 ),
                 SizedBox(height: 32.r),
                 Footer(),
@@ -43,8 +45,8 @@ class _UserRegisterScreen extends State<UserRegisterScreen> {
 }
 
 class OwnerRegister extends StatefulWidget {
-  OwnerRegister({Key? key, required this.Id}) : super(key: key);
-  var Id;
+  OwnerRegister({Key? key, required this.user}) : super(key: key);
+  var user;
   @override
   State<OwnerRegister> createState() => _OwnerRegisterState();
 }
@@ -53,8 +55,6 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   //dropdown options for type of business
   var userId ;
   final _formKey = GlobalKey<FormState>();
-
-
 //form field variables
   String _first_name ="";
   String _last_name="";
@@ -62,13 +62,19 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   late String _home_number;
   late int _code_meli;
   String _email = "";
-
-  final _viewModel = UserViewModel();
-  final List<User> _owners = [];
-
+  final _ownerViewModel = OwnerViewModel();
+  final _tenantViewModel = TenantViewModel();
+  late Owner owner = Owner(phone_number: "");
+  late Tenant tenant = Tenant(phone_number: "");
+  late bool TeOw;
   @override
   void initState() {
-    findPhone();
+    TeOw = tenantOrOwner(widget.user);
+    if(TeOw == true){
+      owner = widget.user;
+    }else{
+      tenant = widget.user;
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -376,20 +382,31 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           ),
                                           onPressed: () async {
                                             if (_formKey.currentState!.validate()) {
-                                              userId = widget.Id;
-                                              User user = User(
-                                                id: userId,
-                                                first_name: _first_name,
-                                                last_name: _last_name,
-                                                home_number: _home_number,
-                                                phone_number: _phone_number,
-                                                code_meli: _code_meli.toString(),
-                                                email: _email,
-                                              );
-
-                                              await _viewModel.editUser(user);
-                                              Get.toNamed(HomePage,
-                                                  arguments: userId);
+                                              if(TeOw == true){
+                                                Owner newOwner = Owner(
+                                                  id: owner.id,
+                                                  first_name: _first_name,
+                                                  last_name: _last_name,
+                                                  home_number: _home_number,
+                                                  phone_number: _phone_number,
+                                                  code_meli: _code_meli.toString(),
+                                                  email: _email,
+                                                );
+                                                await _ownerViewModel.editOwner(newOwner);
+                                                Get.toNamed(HomePage, arguments: newOwner);
+                                              }else{
+                                                Tenant newTenant = Tenant(
+                                                  id: tenant.id,
+                                                  first_name: _first_name,
+                                                  last_name: _last_name,
+                                                  home_number: _home_number,
+                                                  phone_number: _phone_number,
+                                                  code_meli: _code_meli.toString(),
+                                                  email: _email,
+                                                );
+                                                await _tenantViewModel.editTenant(newTenant);
+                                                Get.toNamed(HomePage, arguments: newTenant);
+                                              }
                                             }
                                           },
                                           child: Text(
@@ -412,7 +429,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           ),
                                           onPressed: () {
                                             Get.toNamed(HomePage,
-                                                arguments: widget.Id);
+                                                arguments: widget.user);
                                           },
                                           child: Text(
                                             'انصراف',
@@ -438,20 +455,5 @@ class _OwnerRegisterState extends State<OwnerRegister> {
             ),
           ],
         ));
-  }
-  void findPhone() {
-    // print(code);
-    // code to verify the confirmation code entered by the user
-    _viewModel.searchUsers(widget.Id);
-    _viewModel.users.stream.listen((list) async {
-      setState(() {
-        _owners.addAll(list);
-      });
-      if(_owners.isNotEmpty){
-        for (User item in _owners) {
-          _phone_number = item.phone_number??'';
-        }
-      }
-    });
   }
 }
