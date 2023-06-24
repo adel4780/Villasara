@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:villasara_front_end/view/header-footer/header_panel.dart';
-
+import 'package:villasara_front_end/view_model/contract_viewmodel.dart';
+import '../../model/entity/contract.dart';
 import '../../model/entity/owner.dart';
 import '../../model/entity/tenant.dart';
 import '../../model/entity/villa.dart';
@@ -27,18 +28,21 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
   String? startDate;
 
   final List<Villa> _villas = [];
+  final List<Contract> _contracts = [];
   final _villaViewModel = VillaViewModel();
+  final _contractViewModel = ContractViewModel();
   late Owner owner;
   late Tenant tenant;
+  late bool TeOw;
   bool _showNoSub = false;
 
   @override
   initState() {
     if(widget.user is Tenant){
       tenant = widget.user;
-      searchReservedVillas(tenant.id).then((_) => Timer(Duration(seconds: 5), (){
+      searchReservedVillas(tenant.id).then((_) => Timer(Duration(seconds: 8), (){
         setState((){
-          _showNoSub = _villas.isEmpty;
+          _showNoSub = _contracts.isEmpty;
         });
       }));
     }else{
@@ -50,7 +54,6 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
       }));
     }
     super.initState();
-
   }
   @override
   Widget build(BuildContext context) {
@@ -61,7 +64,7 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
           child: Column(
             children: [
               HeaderPanel(user: widget.user),
-              villaList(),
+              buildvillaList(),
               Footer(),
             ],
           ),
@@ -69,18 +72,31 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
       ),
     );
   }
-  Widget villaList() {
-    if (_villas.isEmpty) {
-      if (_showNoSub) {
-        return noSub();
+  Widget buildvillaList() {
+    if(widget.user is Owner){
+      if (_villas.isEmpty) {
+        if (_showNoSub) {
+          return noSub();
+        } else {
+          return loading();
+        }
       } else {
-        return loading();
+        return ownerBuildList();
       }
-    } else {
-      return buildList();
+    }else if(widget.user is Tenant){
+      if (_contracts.isEmpty) {
+        if (_showNoSub) {
+          return noSub();
+        } else {
+          return loading();
+        }
+      } else {
+          return tenantBuildList();
+      }
     }
+    return noSub();
   }
-  Widget buildList() {
+  Widget ownerBuildList() {
     return Container(
       padding: EdgeInsets.only(
         left: 100.0.w,
@@ -99,14 +115,40 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
             padding: EdgeInsets.only(left: 350.w, right: 350.w,top: 20.h,),
             itemBuilder: (BuildContext context, int index) {
               Villa villa = _villas[index];
-              return buildListItem(villa, index);
+              return buildVillaList(villa, index);
             },
           ),
         ],
       ),
     );
   }
-
+  Widget tenantBuildList() {
+    return Container(
+      padding: EdgeInsets.only(
+        left: 100.0.w,
+        top: 60.0.h,
+        right: 100.0.w,
+      ),
+      width: 1920.w,
+      //height: ((300 * _villas.length) + 300).h,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ListView.builder(
+            itemCount: _contracts.length,
+            shrinkWrap: true,
+            padding: EdgeInsets.only(left: 350.w, right: 350.w,top: 20.h,),
+            itemBuilder: (BuildContext context, int index) {
+              Contract contract = _contracts[index];
+              Villa villa = _villas[index];
+              return buildContractList(contract, villa, index);
+            },
+          ),
+        ],
+      ),
+    );
+  }
   Widget noSub() {
     return Container(
       padding: EdgeInsets.only(
@@ -135,7 +177,7 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
       ),
     );
   }
-  Widget buildListItem(Villa villa, int index){
+  Widget buildVillaList(Villa villa, int index){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -188,6 +230,51 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
       ],
     );
   }
+  Widget buildContractList(Contract contract, Villa villa,int index){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ListTile(
+          title: contractTitle(contract, villa),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 2.w),
+            borderRadius: BorderRadius.circular(20.r),
+          ),
+          subtitle: Column(
+            children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 20.w,right: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _contracts.remove(contract);
+                        });
+                      },
+                      child: buttonTextStyle('حذف'),
+                      style: buttonStyle_build(150, 70, 20, LightBlueColor),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 30.h,
+        ),
+      ],
+    );
+  }
   Future<void> searchVilla(int? id) async {
     _villaViewModel.searchVillas(id??0);
     _villaViewModel.villas.stream.listen((list) {
@@ -198,12 +285,15 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
   }
   // TODO villa contracts List
   Future<void> searchReservedVillas(int? id) async{
-    _villaViewModel.searchVillas(id??0);
-    _villaViewModel.villas.stream.listen((list) {
+    _contractViewModel.searchContracts(id??0);
+    _contractViewModel.villas.stream.listen((list) {
       setState(() {
-        _villas.addAll(list);
+        _contracts.addAll(list);
       });
     });
+    for(var item in _contracts){
+      searchVilla(item.villaOwner);
+    }
   }
   void deleteVilla(Villa villa) {
     _villaViewModel.deleteVilla(villa);
@@ -211,6 +301,7 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
       _villas.remove(villa);
     });
   }
+
 
 
 }
