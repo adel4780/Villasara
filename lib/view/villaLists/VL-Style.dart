@@ -11,7 +11,6 @@ Widget villaTitle(Villa villa) {
   String? city = villa.city;
   String? Logo = villa.images![0].image;
   return Wrap(
-    alignment: WrapAlignment.spaceBetween,
     children: [
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -28,19 +27,19 @@ Widget villaTitle(Villa villa) {
               child: Logo == null
                   ?Image.asset(
                 EmptyImg,
-                width: 200.w,
-                height: 200.h,
+                width: 160.w,
+                height: 160.h,
               )
                   : Image.memory(
                 base64.decode(Logo),
                 fit: BoxFit.cover,
-                width: 200.w,
-                height: 200.h,
+                width: 160.w,
+                height: 160.h,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(
                     EmptyImg,
-                    width: 200.w,
-                    height: 200.h,
+                    width: 160.w,
+                    height: 160.h,
                     fit: BoxFit.cover,
                   );
                 },
@@ -55,6 +54,7 @@ Widget villaTitle(Villa villa) {
             ),
         ],
       ),
+      SizedBox(width: 30.w,),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -92,14 +92,13 @@ Widget villaTitle(Villa villa) {
 }
 Widget contractTitle(Contract contract, Villa villa) {
   String? name = villa.name??"";
-  String? state = Proviences[villa.state??0];
+  String? state = Proviences[villa.state??0] ?? "";
   String? city = villa.city;
-  String? Logo = villa.images![0].image;
-  String? startDate = contract.startDate;
-  String? endDate = contract.endDate;
-  String? address = villa.address;
+  String? Logo = villa.images![0].image ?? "";
+  String? startDate = contract.startDate ?? "";
+  String? endDate = contract.endDate ?? "";
+  String? address = villa.address ?? "";
   return Wrap(
-    alignment: WrapAlignment.spaceBetween,
     children: [
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -143,6 +142,7 @@ Widget contractTitle(Contract contract, Villa villa) {
             ),
         ],
       ),
+      SizedBox(width: 40.w,),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -162,7 +162,7 @@ Widget contractTitle(Contract contract, Villa villa) {
             height: 10.h,
           ),
           Text(
-            "$state \\ $city"??"",
+            "$state - $city"??"",
             style: TextStyle(
               fontSize: 24.0.sp,
               fontWeight: FontWeight.w400,
@@ -189,18 +189,6 @@ Widget contractTitle(Contract contract, Villa villa) {
             " پایان : $endDate",
             style: TextStyle(
               fontSize: 24.0.sp,
-              fontWeight: FontWeight.w400,
-              fontFamily: IranSansWeb,
-              color: BlackColor,
-            ),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Text(
-            " آدرس : $address",
-            style: TextStyle(
-              fontSize: 22.0.sp,
               fontWeight: FontWeight.w400,
               fontFamily: IranSansWeb,
               color: BlackColor,

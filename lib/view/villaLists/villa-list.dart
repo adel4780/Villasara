@@ -16,6 +16,7 @@ import 'VL-Style.dart';
 class MyVillaScreen extends StatefulWidget {
   MyVillaScreen({Key? key}) : super(key: key);
   var user = Get.arguments;
+
   @override
   State<MyVillaScreen> createState() => _MyVillaScreenState();
 }
@@ -26,14 +27,13 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
   late int period;
   late double amount;
   String? startDate;
-
   final List<Villa> _villas = [];
   final List<Contract> _contracts = [];
   final _villaViewModel = VillaViewModel();
   final _contractViewModel = ContractViewModel();
   late Owner owner;
   late Tenant tenant;
-  late bool TeOw;
+  late bool TeOw = false;
   bool _showNoSub = false;
 
   @override
@@ -301,7 +301,4 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
       _villas.remove(villa);
     });
   }
-
-
-
 }
