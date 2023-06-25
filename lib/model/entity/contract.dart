@@ -1,4 +1,4 @@
-class Contract{
+class Contract {
   int? id;
   int? villaOwner;
   int? villa;
@@ -29,18 +29,17 @@ class Contract{
         isConfirmedTenant: json['is_confirmed_by_tenant'],
         tenant: json['tenant'],
         startDate: json['start_date'],
-        endDate: json['end_date']
-    );
+        endDate: json['end_date']);
   }
   Map<String, dynamic> toJson() => {
-    'id' : id,
-    'villa_owner' : villaOwner,
-    'villa' : villa,
-    'total_price' : totalPrice,
-    'is_confirmed_by_landowner' : isConfirmedLandowner,
-    'is_confirmed_by_tenant' : isConfirmedTenant,
-    'tenant' : tenant,
-    'start_date' : startDate,
-    'end_date' : endDate,
-  };
+        'id': id,
+        'villa_owner': villaOwner,
+        'villa': villa,
+        'total_price': totalPrice,
+        'is_confirmed_by_landowner': isConfirmedLandowner,
+        'is_confirmed_by_tenant': isConfirmedTenant,
+        'tenant': tenant,
+        'start_date': startDate,
+        'end_date': endDate,
+      };
 }

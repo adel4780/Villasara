@@ -7,8 +7,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import '../../../model/entity/image.dart';
 import '../../header-footer/header_panel.dart';
+import '../../../model/entity/tenant.dart';
 import 'package:villasara_front_end/view_model/owner_viewmodel.dart';
 import 'package:villasara_front_end/model/entity/owner.dart';
+import 'package:villasara_front_end/model/entity/contract.dart';
 
 class VillaDetail extends StatefulWidget {
   VillaDetail({super.key});
@@ -20,6 +22,8 @@ class VillaDetail extends StatefulWidget {
 }
 
 class _VillaDetailState extends State<VillaDetail> {
+  late Contract contract;
+
   var user;
   Villa? villa;
 
@@ -27,10 +31,17 @@ class _VillaDetailState extends State<VillaDetail> {
   final _ownerviewModel = OwnerViewModel();
   final List<Owner> _owners = [];
 
+  late Tenant tenant;
+
   @override
   void initState() {
     user = widget.parameters[0];
     villa = widget.parameters[1];
+
+    if (widget.parameters[0] is Tenant) {
+      tenant = widget.parameters[0];
+    }
+    findOwner(villa!.villaOwner);
     super.initState();
   }
 
@@ -44,8 +55,12 @@ class _VillaDetailState extends State<VillaDetail> {
           children: [
             HeaderPanel(user: user),
             Detail(
+              user: user,
+              villa: villa,
+              tenant: tenant,
               id: villa?.id,
               name: villa?.name,
+              vilaOwnerid: villa?.villaOwner,
               villaOwner: _owner_name,
               state: Proviences[(villa!.state ?? 0) + 1] ?? "",
               city: villa?.city,
@@ -59,7 +74,7 @@ class _VillaDetailState extends State<VillaDetail> {
     ));
   }
 
-  void findOwner(int id) {
+  void findOwner(int? id) {
     _ownerviewModel.searchOwners(id);
     _ownerviewModel.owners.stream.listen((list) async {
       setState(() {
@@ -98,36 +113,53 @@ final List<Widget> imageSliders = imgList
 class Detail extends StatefulWidget {
   Detail({
     super.key,
+    required this.user,
+    required this.villa,
+    required this.tenant,
     required this.id,
     required this.name,
+    required this.vilaOwnerid,
     required this.villaOwner,
     required this.state,
     required this.city,
     required this.region,
     required this.address,
   });
-
+  var user;
+  Villa? villa;
+  Tenant tenant;
   late int? id;
   late String? name;
+  late int? vilaOwnerid;
   late String? villaOwner;
   late String? state;
   late String? city;
   late String? region;
   late String? address;
   late String? description;
-  late String? pricePerNight;
+  late double? pricePerNight;
   late List<VillaImage> images;
   @override
   State<Detail> createState() => _DetailState();
 }
 
 class _DetailState extends State<Detail> {
+  late Contract contract;
+
   final CarouselController _controller = CarouselController();
   int _current = 0;
   int _counter = 0;
 
   String startDay = '';
   String endDay = '';
+
+  @override
+  void initState() {
+    contract.villaOwner = widget.vilaOwnerid;
+    contract.villa = widget.id;
+    contract.tenant = widget.tenant.id;
+    super.initState();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -305,7 +337,9 @@ class _DetailState extends State<Detail> {
                             text: TextSpan(
                               children: <TextSpan>[
                                 const TextSpan(text: "شروع از "),
-                                TextSpan(text: widget.pricePerNight ?? ""),
+                                TextSpan(
+                                    text:
+                                        widget.pricePerNight.toString() ?? ""),
                                 const TextSpan(text: "تومان / هرشب"),
                               ],
                             ),
@@ -339,6 +373,14 @@ class _DetailState extends State<Detail> {
                                               .toJalaliDateTime()
                                               .substring(0, 10) ??
                                           "";
+                                      contract.startDate = startDay;
+                                      contract.endDate = endDay;
+                                      contract.totalPrice = (double.parse(
+                                                  endDay.substring(
+                                                      8, endDay.length)) -
+                                              double.parse(startDay.substring(
+                                                  8, startDay.length))) *
+                                          widget.pricePerNight!.toInt();
                                     },
                                   );
                                 },
@@ -436,7 +478,13 @@ class _DetailState extends State<Detail> {
                             ),
                           ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.toNamed(PreviewPage, arguments: [
+                                widget.user,
+                                widget.villa,
+                                contract,
+                              ]);
+                            },
                             child: Text(
                               "رزرو",
                               style: TextStyle(color: WhiteColor),
