@@ -5,18 +5,16 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../model/entity/owner.dart';
-import '../../../model/entity/tenant.dart';
-import '../../../view_model/owner_viewmodel.dart';
+import '../../../model/entity/person.dart';
+import '../../../view_model/person_viewmodel.dart';
 import '../../header-footer/footer.dart';
 import '../../../utils/constants.dart';
-import '../../../view_model/tenant_viewmodel.dart';
 import '../../header-footer/header_panel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:html' as html;
 class UserRegisterScreen extends StatefulWidget {
   UserRegisterScreen({Key? key}) : super(key: key);
-  var user = Get.arguments;
+  Person user = Get.arguments;
 
   @override
   _UserRegisterScreen createState() => _UserRegisterScreen();
@@ -48,14 +46,14 @@ class _UserRegisterScreen extends State<UserRegisterScreen>{
 
 class OwnerRegister extends StatefulWidget {
   OwnerRegister({Key? key, required this.user}) : super(key: key);
-  var user;
+  Person user;
   @override
   State<OwnerRegister> createState() => _OwnerRegisterState();
 }
 
 class _OwnerRegisterState extends State<OwnerRegister> {
   //dropdown options for type of business
-  var userId ;
+  late int userId ;
   final _formKey = GlobalKey<FormState>();
 
   html.File? _image;
@@ -86,20 +84,12 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   late String _home_number;
   late int _code_meli;
   String _email = "";
-  final _ownerViewModel = OwnerViewModel();
-  final _tenantViewModel = TenantViewModel();
-  late Owner owner = Owner(phone_number: "");
-  late Tenant tenant = Tenant(phone_number: "");
+  final _personViewModel = PersonViewModel();
   late bool TeOw;
   String _logo ="";
   @override
   void initState() {
-    TeOw = tenantOrOwner(widget.user);
-    if(TeOw == true){
-      owner = widget.user;
-    }else{
-      tenant = widget.user;
-    }
+
   }
   @override
   Widget build(BuildContext context) {
@@ -457,9 +447,8 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           ),
                                           onPressed: () async {
                                             if (_formKey.currentState!.validate()) {
-                                              if(TeOw == true){
-                                                Owner newOwner = Owner(
-                                                  id: owner.id,
+                                                Person newPesron = Person(
+                                                  id: widget.user.id,
                                                   first_name: _first_name,
                                                   last_name: _last_name,
                                                   home_number: _home_number,
@@ -468,22 +457,8 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                                   email: _email,
                                                   image: _logo
                                                 );
-                                                await _ownerViewModel.editOwner(newOwner);
-                                                Get.toNamed(HomePage, arguments: newOwner);
-                                              }else{
-                                                Tenant newTenant = Tenant(
-                                                  id: tenant.id,
-                                                  first_name: _first_name,
-                                                  last_name: _last_name,
-                                                  home_number: _home_number,
-                                                  phone_number: _phone_number,
-                                                  code_meli: _code_meli.toString(),
-                                                  email: _email,
-                                                  image: _logo,
-                                                );
-                                                await _tenantViewModel.editTenant(newTenant);
-                                                Get.toNamed(HomePage, arguments: newTenant);
-                                              }
+                                                await _personViewModel.editPerson(newPesron);
+                                                Get.toNamed(HomePage, arguments: newPesron);
                                             }
                                           },
                                           child: Text(

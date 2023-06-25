@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:villasara_front_end/model/entity/villa.dart';
 import 'package:villasara_front_end/utils/constants.dart';
+import '../../../model/entity/person.dart';
+import '../../../view_model/person_viewmodel.dart';
 import '../../header-footer/footer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import '../../../model/entity/image.dart';
 import '../../header-footer/header_panel.dart';
-import '../../../model/entity/tenant.dart';
-import 'package:villasara_front_end/view_model/owner_viewmodel.dart';
-import 'package:villasara_front_end/model/entity/owner.dart';
 import 'package:villasara_front_end/model/entity/contract.dart';
 
 class VillaDetail extends StatefulWidget {
@@ -23,22 +22,19 @@ class VillaDetail extends StatefulWidget {
 
 class _VillaDetailState extends State<VillaDetail> {
   late Contract contract;
-
-  var user;
+  late Person user;
   Villa? villa;
-
+  late Person tenant;
   late String _owner_name;
-  final _ownerviewModel = OwnerViewModel();
-  final List<Owner> _owners = [];
-
-  late Tenant tenant;
+  final _personviewModel = PersonViewModel();
+  final List<Person> _owners = [];
 
   @override
   void initState() {
     user = widget.parameters[0];
     villa = widget.parameters[1];
 
-    if (widget.parameters[0] is Tenant) {
+    if (user.role == guest) {
       tenant = widget.parameters[0];
     }
     findOwner(villa!.villaOwner);
@@ -75,13 +71,13 @@ class _VillaDetailState extends State<VillaDetail> {
   }
 
   void findOwner(int? id) {
-    _ownerviewModel.searchOwners(id);
-    _ownerviewModel.owners.stream.listen((list) async {
+    _personviewModel.searchPersons(id??0);
+    _personviewModel.persons.stream.listen((list) async {
       setState(() {
         _owners.addAll(list);
       });
       if (_owners.isNotEmpty) {
-        for (Owner item in _owners) {
+        for (var item in _owners) {
           String? firstName = item.first_name;
           String? lastName = item.last_name;
           _owner_name = "$firstName $lastName" ?? '';
@@ -125,9 +121,9 @@ class Detail extends StatefulWidget {
     required this.region,
     required this.address,
   });
-  var user;
+  Person user;
   Villa? villa;
-  Tenant tenant;
+  Person tenant;
   late int? id;
   late String? name;
   late int? vilaOwnerid;

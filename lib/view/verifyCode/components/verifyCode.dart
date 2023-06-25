@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../../model/entity/owner.dart';
-import '../../../model/entity/tenant.dart';
+import '../../../model/entity/person.dart';
 import '../../../utils/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import '../../../view_model/owner_viewmodel.dart';
-import '../../../view_model/tenant_viewmodel.dart';
+import '../../../view_model/person_viewmodel.dart';
 
 class ConfirmationDialog extends StatefulWidget {
   String? role;
@@ -29,6 +26,9 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
       t5 = TextEditingController();
   int? id;
   late bool TeOw;
+  final _personViewModel = PersonViewModel();
+  final List<Person> _personList = [];
+
   verifyOTP(String verificationId,String userOTP) async{
     FirebaseAuth auth = FirebaseAuth.instance;
     try{
@@ -44,10 +44,6 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   Timer? _timer;
   int _resendSeconds = 100;
 
-  final _ownerViewModel = OwnerViewModel();
-  final _tenantViewModel = TenantViewModel();
-  final List<Owner> _owners = [];
-  final List<Tenant> _tenants = [];
   @override
   void initState() {
     super.initState();
@@ -106,45 +102,44 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   }
 
   void _confirmCode() {
-    Owner owner = Owner(phone_number: "");
-    Tenant tenant = Tenant(phone_number: "");
+    Person person = Person(phone_number: "");
     if(widget.role == 'host'){
       // print(code);
       // code to verify the confirmation code entered by the user
-      _ownerViewModel.searchPhone(widget.phoneNumber!);
-      _ownerViewModel.owners.stream.listen((list) async {
+      _personViewModel.searchHostPhone(widget.phoneNumber??"", "host");
+      _personViewModel.persons.stream.listen((list) async {
         setState(() {
-          _owners.addAll(list);
+          _personList.addAll(list);
         });
-        if(_owners.isNotEmpty){
-          for (var item in _owners) {
-            owner = item;
+        if(_personList.isNotEmpty){
+          for (var item in _personList) {
+            person = item;
           }
         } else {
-          owner = await Owner(phone_number: widget.phoneNumber,first_name: "",last_name: "");
-          await Future.delayed(const Duration(seconds: 5));
-          owner = await _ownerViewModel.addOwner(owner);
+          Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "host");
+          person = await _personViewModel.addPerson(item);
         }
-        Get.toNamed(HomePage, arguments: owner);
+        await Future.delayed(const Duration(seconds: 5));
+        Get.toNamed(HomePage, arguments: person);
       });
     }else{
       // print(code);
       // code to verify the confirmation code entered by the user
-      _tenantViewModel.searchPhone(widget.phoneNumber!);
-      _tenantViewModel.tenants.stream.listen((list) async {
+      _personViewModel.searchGuestPhone(widget.phoneNumber!, "guest");
+      _personViewModel.persons.stream.listen((list) async {
         setState(() {
-          _tenants.addAll(list);
+          _personList.addAll(list);
         });
-        if(_tenants.isNotEmpty){
-          for (var item in _tenants) {
-            tenant = item;
+        if(_personList.isNotEmpty){
+          for (var item in _personList) {
+            person = item;
           }
         } else {
-          tenant = await Tenant(phone_number: widget.phoneNumber,first_name: "",last_name: "");
-          await Future.delayed(const Duration(seconds: 5));
-          tenant = await _tenantViewModel.addTenant(tenant);
+          Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "guest");
+          person = await _personViewModel.addPerson(item);
         }
-        Get.toNamed(HomePage, arguments: tenant);
+        await Future.delayed(const Duration(seconds: 5));
+        Get.toNamed(HomePage, arguments: person);
       });
     }
   }

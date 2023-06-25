@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:villasara_front_end/view/header-footer/header_panel.dart';
 import 'package:villasara_front_end/view_model/villa_viewmodel.dart';
+import '../../model/entity/person.dart';
 import '../../model/entity/villa.dart';
 import '../../utils/constants.dart';
 import '../header-footer/footer.dart';
@@ -14,7 +15,7 @@ import 'search.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
-  var user = Get.arguments;
+  Person user = Get.arguments;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

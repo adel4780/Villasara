@@ -6,8 +6,7 @@ import 'package:get/get.dart';
 import 'package:villasara_front_end/view/header-footer/header_panel.dart';
 import 'package:villasara_front_end/view_model/contract_viewmodel.dart';
 import '../../model/entity/contract.dart';
-import '../../model/entity/owner.dart';
-import '../../model/entity/tenant.dart';
+import '../../model/entity/person.dart';
 import '../../model/entity/villa.dart';
 import '../../utils/constants.dart';
 import '../../view_model/villa_viewmodel.dart';
@@ -15,7 +14,7 @@ import '../header-footer/footer.dart';
 import 'VL-Style.dart';
 class MyVillaScreen extends StatefulWidget {
   MyVillaScreen({Key? key}) : super(key: key);
-  var user = Get.arguments;
+  Person user = Get.arguments;
 
   @override
   State<MyVillaScreen> createState() => _MyVillaScreenState();
@@ -31,16 +30,16 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
   final List<Contract> _contracts = [];
   final _villaViewModel = VillaViewModel();
   final _contractViewModel = ContractViewModel();
-  late Owner owner;
-  late Tenant tenant;
   late bool TeOw = false;
   bool _showNoSub = false;
+  late Person tenant;
+  late Person owner;
 
   @override
   initState() {
-    if(widget.user is Tenant){
+    if(widget.user.role == guest){
       tenant = widget.user;
-      searchReservedVillas(tenant.id).then((_) => Timer(Duration(seconds: 8), (){
+      searchReservedVillas(tenant.id).then((_) => Timer(Duration(seconds: 6), (){
         setState((){
           _showNoSub = _contracts.isEmpty;
         });
@@ -73,7 +72,7 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
     );
   }
   Widget buildvillaList() {
-    if(widget.user is Owner){
+    if(widget.user.role == host){
       if (_villas.isEmpty) {
         if (_showNoSub) {
           return noSub();
@@ -83,7 +82,7 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
       } else {
         return ownerBuildList();
       }
-    }else if(widget.user is Tenant){
+    }else if(widget.user.role == guest){
       if (_contracts.isEmpty) {
         if (_showNoSub) {
           return noSub();
@@ -294,6 +293,7 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
     for(var item in _contracts){
       searchVilla(item.villaOwner);
     }
+    await Future.delayed(Duration(seconds: 3));
   }
   void deleteVilla(Villa villa) {
     _villaViewModel.deleteVilla(villa);
