@@ -1,4 +1,4 @@
-class Tenant{
+class Person{
   int? id;
   String? role;
   String? first_name;
@@ -9,7 +9,7 @@ class Tenant{
   String? home_number;
   String? image;
 
-  Tenant({
+  Person({
     this.id,
     required this.phone_number,
     this.first_name,
@@ -17,27 +17,31 @@ class Tenant{
     this.code_meli,
     this.email,
     this.home_number,
-    this.image
+    this.image,
+    this.role,
   });
-  factory Tenant.fromJson(Map<String, dynamic> json) {
-    return Tenant(
+  factory Person.fromJson(Map<String, dynamic> json) {
+    return Person(
       id: json["id"],
-      phone_number: json["phone_number"],
+      phone_number: json["username"],
       first_name: json["first_name"],
       last_name: json["last_name"],
-      code_meli: json["code_meli"],
+      code_meli: json["national_code"],
       email: json["email"],
       home_number: json["home"],
-      image : json["image"]
+      image : json["image"],
+      role: json["role"],
     );
   }
   Map<String, dynamic> toJson()=> {
-    'phone_number':phone_number,
+    'id' : id,
+    'username':phone_number,
     'first_name' : first_name,
     'last_name' : last_name,
-    'code_meli': code_meli,
+    'national_code': code_meli,
     'email' : email,
     'home_number':home_number,
-    'image' : image
+    'image' : image,
+    'role' : role,
   };
 }
