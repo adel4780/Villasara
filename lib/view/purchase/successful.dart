@@ -19,7 +19,7 @@ class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
   late int period ;
   late int amount = 0;
   late String name;
-  late int owner;
+  late var owner;
   @override
   void initState() {
     period = widget.purchase[0];
