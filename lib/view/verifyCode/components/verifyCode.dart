@@ -239,7 +239,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
               onPressed: () async {
                 verifyOTP(widget.verificationId,
                 t0.text + t1.text + t2.text + t3.text + t4.text + t5.text);
-                // _confirmCode();
+                _confirmCode();
               }),
         ),
       ],
