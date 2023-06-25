@@ -25,7 +25,7 @@ class TenantRepositoryImpl extends TenantRepository {
   }
   @override
   Future<List<Tenant>> searchTenants(int id)  async {
-    var response = await dio.get('Tenant/$id');
+    var response = await dio.get('Tenant/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -33,7 +33,9 @@ class TenantRepositoryImpl extends TenantRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var tenant = Tenant.fromJson(data);
+          if(id == tenant.id) {
             tenants.add(tenant);
+          }
         }
       }
       return tenants;

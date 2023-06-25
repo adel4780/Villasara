@@ -46,7 +46,7 @@ class VillaRepositoryImpl extends VillaRepository {
 
   @override
   Future<List<Villa>> searchVillas(int businessOwnerId) async {
-    var response = await dio.get('villa/$businessOwnerId');
+    var response = await dio.get('villa/');
     print(
         'response: ${response.statusMessage}   responceCode: ${response.statusCode}');
     if (response.data is List) {
@@ -55,7 +55,9 @@ class VillaRepositoryImpl extends VillaRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var villa = Villa.fromJson(data);
-          villas.add(villa);
+          if(businessOwnerId == villa.villaOwner) {
+            villas.add(villa);
+          }
         }
       }
       return villas;
@@ -66,7 +68,7 @@ class VillaRepositoryImpl extends VillaRepository {
 
   @override
   Future<List<VillaImage>> searchImages(int id) async {
-    var response = await dio.get('villamedia/$id');
+    var response = await dio.get('villamedia/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -74,7 +76,9 @@ class VillaRepositoryImpl extends VillaRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var image = VillaImage.fromJson(data);
+          if(id == image.villa){
           images.add(image);
+          }
         }
       }
       return images;

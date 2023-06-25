@@ -28,7 +28,7 @@ class ContractRepositoryImpl extends ContractRepository {
 
   @override
   Future<List<Contract>> searchContracts(int villa) async {
-    var response = await dio.get('contract/${villa}');
+    var response = await dio.get('contract/');
     print(
         'response: ${response.statusMessage}   responceCode: ${response.statusCode}');
     if (response.data is List) {
@@ -37,7 +37,9 @@ class ContractRepositoryImpl extends ContractRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var contract = Contract.fromJson(data);
-          contracts.add(contract);
+          if(villa == contract.villa) {
+            contracts.add(contract);
+          }
         }
       }
       return contracts;

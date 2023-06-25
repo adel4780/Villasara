@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import '../../../model/entity/owner.dart';
