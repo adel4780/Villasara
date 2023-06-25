@@ -446,7 +446,7 @@ class _PreviewState extends State<Preview> {
           arguments: [
             period,
             amount,
-            widget.contract.totalPrice,
+            widget.villa!.name,
             widget.user,
           ],
         );
