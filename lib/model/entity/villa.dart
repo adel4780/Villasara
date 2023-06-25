@@ -1,6 +1,6 @@
 import 'image.dart';
 
-class Villa{
+class Villa {
   int? id;
   String? name;
   int? villaOwner;
@@ -12,6 +12,8 @@ class Villa{
   double? pricePerNight;
   List<VillaImage>? images;
   String? createdAt;
+  String? startDate;
+  String? endDate;
 
   Villa({
     this.id,
@@ -25,7 +27,9 @@ class Villa{
     this.pricePerNight,
     this.images,
     this.createdAt,
-});
+    this.startDate,
+    this.endDate,
+  });
   factory Villa.fromJson(Map<String, dynamic> json) {
     return Villa(
       id: json['id'],
@@ -36,19 +40,23 @@ class Villa{
       region: json['region'],
       address: json['address'],
       description: json['description'],
-      pricePerNight: json['price_per_night'],
-      createdAt: json['created_at']
+      pricePerNight: json['pricePerNight'],
+      createdAt: json['created_at'],
+      startDate: json['startDate'],
+      endDate: json['endDate'],
     );
   }
   Map<String, dynamic> toJson() => {
-    'id' : id,
-    'name' : name,
-    'villa_owner' : villaOwner,
-    'state': state,
-    'city': city,
-    'region': region,
-    'address': address,
-    'description': description,
-    'price_per_night': pricePerNight,
-  };
+        'id': id,
+        'name': name,
+        'villa_owner': villaOwner,
+        'state': state,
+        'city': city,
+        'region': region,
+        'address': address,
+        'description': description,
+        'pricePerNight': pricePerNight,
+        'startDate': startDate,
+        'endDate': endDate,
+      };
 }
