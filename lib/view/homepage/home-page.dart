@@ -97,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context) => SearchScreen(
                     searchVillas: villas,
                     onSearch: updateQuantities,
+                    user: widget.user,
                     // pass updateQuantities as a callback
                   ),
                 ),

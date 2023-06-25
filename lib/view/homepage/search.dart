@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:get/get.dart';
 import 'package:villasara_front_end/utils/constants.dart';
 
 import '../../model/entity/villa.dart';
+import '../villaLists/VL-Style.dart';
 class SearchScreen extends StatefulWidget {
   final List<Villa> searchVillas;
   final Function(List<Villa>) onSearch;
-
+  final user;
   const SearchScreen(
-      {Key? key, required this.searchVillas, required this.onSearch,})
+      {Key? key, required this.searchVillas, required this.onSearch, required this.user})
       : super(key: key);
 
   @override
@@ -128,16 +129,15 @@ class _SearchScreenState extends State<SearchScreen> {
               itemBuilder: (context, index) {
                 final villa = searchResults[index];
                 return ListTile(
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        villa.name??"",
-                        style: TextStyle(fontFamily: IranSansWeb, fontSize: 24),
-                      ),
-                    ],
+                  onTap: (){
+                    Get.toNamed(VillaDetailPage, arguments: [widget.user, villa]);
+                  },
+                  title: villaTitle(villa),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 2.w),
+                    borderRadius: BorderRadius.circular(20.r),
                   ),
-                  subtitle: Column(
+                  /*subtitle: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -151,7 +151,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         height: 10,
                       ),
                     ],
-                  ),
+                  ),*/
                 );
               },
             ),
