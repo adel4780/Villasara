@@ -51,6 +51,7 @@ dependencies:
   persian_datetime_picker: ^2.6.0
   shamsi_date: ^1.0.1
   percent_indicator: ^4.2.3
+  image_picker: ^0.8.7+1
 
 dev_dependencies:
   flutter_test:

@@ -7,6 +7,7 @@ class Tenant{
   String? phone_number;
   String? email;
   String? home_number;
+  String? image;
 
   Tenant({
     this.id,
@@ -15,7 +16,8 @@ class Tenant{
     this.last_name,
     this.code_meli,
     this.email,
-    this.home_number
+    this.home_number,
+    this.image
   });
   factory Tenant.fromJson(Map<String, dynamic> json) {
     return Tenant(
@@ -25,7 +27,8 @@ class Tenant{
       last_name: json["last_name"],
       code_meli: json["code_meli"],
       email: json["email"],
-      home_number: json["home"]
+      home_number: json["home"],
+      image : json["image"]
     );
   }
   Map<String, dynamic> toJson()=> {
@@ -34,6 +37,7 @@ class Tenant{
     'last_name' : last_name,
     'code_meli': code_meli,
     'email' : email,
-    'home_number':home_number
+    'home_number':home_number,
+    'image' : image
   };
 }

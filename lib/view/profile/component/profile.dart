@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,10 +12,11 @@ import '../../header-footer/footer.dart';
 import '../../../utils/constants.dart';
 import '../../../view_model/tenant_viewmodel.dart';
 import '../../header-footer/header_panel.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'dart:html' as html;
 class UserRegisterScreen extends StatefulWidget {
   UserRegisterScreen({Key? key}) : super(key: key);
-  var user = Get.arguments;
+  var user = Owner(id: 1,phone_number: "0123");
 
   @override
   _UserRegisterScreen createState() => _UserRegisterScreen();
@@ -55,6 +57,28 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   //dropdown options for type of business
   var userId ;
   final _formKey = GlobalKey<FormState>();
+
+  html.File? _image;
+
+  final picker = ImagePicker();
+
+  Future<void> getImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+
+      String _base64String = base64.encode(bytes);
+      _logo = _base64String;
+      final blob = html.Blob([bytes]);
+      setState(() {
+        _image = html.File([blob], pickedFile.path);
+      });
+    } else {
+      print('No image selected.');
+    }
+  }
+
+
 //form field variables
   String _first_name ="";
   String _last_name="";
@@ -67,6 +91,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   late Owner owner = Owner(phone_number: "");
   late Tenant tenant = Tenant(phone_number: "");
   late bool TeOw;
+  String _logo ="";
   @override
   void initState() {
     TeOw = tenantOrOwner(widget.user);
@@ -366,6 +391,55 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     ],
                                   ),
                                   SizedBox(height: 24.0.h),
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          // width: 50,
+                                            height: 130,
+                                            child: Column(
+                                              children: [
+                                                ElevatedButton(
+                                                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(5),
+                                                          side: BorderSide(
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      getImage();
+                                                    },
+                                                    child: Text('افزودن مدرک شناسایی',style: TextStyle(color:WhiteColor),)),
+                                                SizedBox(
+                                                  height: 8.h,
+                                                ),
+                                                //if image not null show the image
+                                                //if image null show text
+                                                _image != null
+                                                    ? Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                    BorderRadius.circular(8),
+                                                    child: Image.network(
+                                                      //to show image, you type like this.
+                                                      '${html.Url.createObjectUrl(_image!)}',
+                                                      fit: BoxFit.cover,
+                                                      width: 100,
+                                                      height: 85,
+                                                    ),
+                                                  ),
+                                                )
+                                                    : Text(
+                                                  "",
+                                                  style:
+                                                  TextStyle(fontSize: 10),
+                                                ),
+                                              ],
+                                            ))
+                                      ]),
                                   //button to submit the form
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -391,6 +465,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                                   phone_number: _phone_number,
                                                   code_meli: _code_meli.toString(),
                                                   email: _email,
+                                                  image: _logo
                                                 );
                                                 await _ownerViewModel.editOwner(newOwner);
                                                 Get.toNamed(HomePage, arguments: newOwner);
@@ -403,6 +478,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                                   phone_number: _phone_number,
                                                   code_meli: _code_meli.toString(),
                                                   email: _email,
+                                                  image: _logo,
                                                 );
                                                 await _tenantViewModel.editTenant(newTenant);
                                                 Get.toNamed(HomePage, arguments: newTenant);
