@@ -71,7 +71,7 @@ class _VillaDetailState extends State<VillaDetail> {
   }
 
   void findOwner(int? id) {
-    _personviewModel.searchPersons(id??0);
+    _personviewModel.searchPersons(id ?? 0);
     _personviewModel.persons.stream.listen((list) async {
       setState(() {
         _owners.addAll(list);
@@ -121,7 +121,7 @@ class Detail extends StatefulWidget {
     required this.region,
     required this.address,
   });
-  Person user;
+  var user;
   Villa? villa;
   Person tenant;
   late int? id;
@@ -160,6 +160,7 @@ class _DetailState extends State<Detail> {
   void _incrementCounter() {
     setState(() {
       _counter++;
+      contract.peopleCount = _counter;
     });
   }
 
@@ -167,6 +168,7 @@ class _DetailState extends State<Detail> {
     if (_counter > 0) {
       setState(() {
         _counter--;
+        contract.peopleCount = _counter;
       });
     }
   }
@@ -371,12 +373,6 @@ class _DetailState extends State<Detail> {
                                           "";
                                       contract.startDate = startDay;
                                       contract.endDate = endDay;
-                                      contract.totalPrice = (double.parse(
-                                                  endDay.substring(
-                                                      8, endDay.length)) -
-                                              double.parse(startDay.substring(
-                                                  8, startDay.length))) *
-                                          widget.pricePerNight!.toInt();
                                     },
                                   );
                                 },
@@ -474,13 +470,15 @@ class _DetailState extends State<Detail> {
                             ),
                           ),
                           ElevatedButton(
-                            onPressed: () {
-                              Get.toNamed(PreviewPage, arguments: [
-                                widget.user,
-                                widget.villa,
-                                contract,
-                              ]);
-                            },
+                            onPressed: contract.peopleCount != 0
+                                ? () {
+                                    Get.toNamed(PreviewPage, arguments: [
+                                      widget.user,
+                                      widget.villa,
+                                      contract,
+                                    ]);
+                                  }
+                                : () {},
                             child: Text(
                               "رزرو",
                               style: TextStyle(color: WhiteColor),
