@@ -715,9 +715,8 @@ class _VillaRegisterState extends State<VillaRegister> {
                                         ),
                                         onPressed: () async {
                                           if (_formKey.currentState!.validate()) {
-                                            int userId = widget.user.id??0;
                                             Villa villa = Villa(
-                                              id: userId,
+                                              villaOwner: widget.user.id,
                                               name: _name,
                                               state: _state,
                                               city: _city,

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:material_color_gen/material_color_gen.dart';
 import 'package:villasara_front_end/utils/constants.dart';
 import 'package:villasara_front_end/view/profile/component/profile.dart';
+import 'package:villasara_front_end/view/villaregistration/components/villaEdit.dart';
 import 'package:villasara_front_end/view/villaregistration/components/villaRegistration.dart';
 import 'view/car/aboutUs.dart';
 import 'view/car/contact.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: ContactUsPage, page: () => ContactUsScreen()),
             GetPage(name: ProfilePage, page: () => UserRegisterScreen()),
             GetPage(name: VillaRegistrationPage, page: () => VillaRegisterScreen()),
+            GetPage(name: VillaEditPage, page: () => VillaEditScreen()),
             GetPage(name: HomePage, page: () => HomeScreen()),
             GetPage(name: OwnerRegisterPage, page: () => UserRegisterScreen()),
             GetPage(name: VillaListPage, page: () => MyVillaScreen()),
