@@ -1,24 +1,28 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../model/entity/user.dart';
+import '../../../model/entity/owner.dart';
+import '../../../model/entity/tenant.dart';
+import '../../../view_model/owner_viewmodel.dart';
 import '../../header-footer/footer.dart';
 import '../../../utils/constants.dart';
-import '../../../view_model/user_viewmodel.dart';
+import '../../../view_model/tenant_viewmodel.dart';
 import '../../header-footer/header_panel.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'dart:html' as html;
 class UserRegisterScreen extends StatefulWidget {
   UserRegisterScreen({Key? key}) : super(key: key);
-  var ID = Get.arguments;
+  var user = Get.arguments;
 
   @override
   _UserRegisterScreen createState() => _UserRegisterScreen();
 }
 
-class _UserRegisterScreen extends State<UserRegisterScreen> {
+class _UserRegisterScreen extends State<UserRegisterScreen>{
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,9 +31,9 @@ class _UserRegisterScreen extends State<UserRegisterScreen> {
           child: Container(
             child: Column(
               children: [
-                HeaderPanel(ID : widget.ID),
+                HeaderPanel(user : widget.user),
                 OwnerRegister(
-                  Id: widget.ID,
+                  user: widget.user,
                 ),
                 SizedBox(height: 32.r),
                 Footer(),
@@ -43,8 +47,8 @@ class _UserRegisterScreen extends State<UserRegisterScreen> {
 }
 
 class OwnerRegister extends StatefulWidget {
-  OwnerRegister({Key? key, required this.Id}) : super(key: key);
-  var Id;
+  OwnerRegister({Key? key, required this.user}) : super(key: key);
+  var user;
   @override
   State<OwnerRegister> createState() => _OwnerRegisterState();
 }
@@ -54,6 +58,26 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   var userId ;
   final _formKey = GlobalKey<FormState>();
 
+  html.File? _image;
+
+  final picker = ImagePicker();
+
+  Future<void> getImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+
+      String _base64String = base64.encode(bytes);
+      _logo = _base64String;
+      final blob = html.Blob([bytes]);
+      setState(() {
+        _image = html.File([blob], pickedFile.path);
+      });
+    } else {
+      print('No image selected.');
+    }
+  }
+
 
 //form field variables
   String _first_name ="";
@@ -62,13 +86,20 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   late String _home_number;
   late int _code_meli;
   String _email = "";
-
-  final _viewModel = UserViewModel();
-  final List<User> _owners = [];
-
+  final _ownerViewModel = OwnerViewModel();
+  final _tenantViewModel = TenantViewModel();
+  late Owner owner = Owner(phone_number: "");
+  late Tenant tenant = Tenant(phone_number: "");
+  late bool TeOw;
+  String _logo ="";
   @override
   void initState() {
-    findPhone();
+    TeOw = tenantOrOwner(widget.user);
+    if(TeOw == true){
+      owner = widget.user;
+    }else{
+      tenant = widget.user;
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -360,6 +391,56 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     ],
                                   ),
                                   SizedBox(height: 24.0.h),
+                                  //images
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          // width: 50,
+                                            height: 130,
+                                            child: Column(
+                                              children: [
+                                                ElevatedButton(
+                                                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(5),
+                                                          side: BorderSide(
+                                                              color: Colors.white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      getImage();
+                                                    },
+                                                    child: Text('افزودن مدرک شناسایی',style: TextStyle(color:WhiteColor),)),
+                                                SizedBox(
+                                                  height: 8.h,
+                                                ),
+                                                //if image not null show the image
+                                                //if image null show text
+                                                _image != null
+                                                    ? Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                    BorderRadius.circular(8),
+                                                    child: Image.network(
+                                                      //to show image, you type like this.
+                                                      '${html.Url.createObjectUrl(_image!)}',
+                                                      fit: BoxFit.cover,
+                                                      width: 100,
+                                                      height: 85,
+                                                    ),
+                                                  ),
+                                                )
+                                                    : Text(
+                                                  "",
+                                                  style:
+                                                  TextStyle(fontSize: 10),
+                                                ),
+                                              ],
+                                            ))
+                                      ]),
                                   //button to submit the form
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -376,20 +457,33 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           ),
                                           onPressed: () async {
                                             if (_formKey.currentState!.validate()) {
-                                              userId = widget.Id;
-                                              User user = User(
-                                                id: userId,
-                                                first_name: _first_name,
-                                                last_name: _last_name,
-                                                home_number: _home_number,
-                                                phone_number: _phone_number,
-                                                code_meli: _code_meli.toString(),
-                                                email: _email,
-                                              );
-
-                                              await _viewModel.editUser(user);
-                                              Get.toNamed(HomePage,
-                                                  arguments: userId);
+                                              if(TeOw == true){
+                                                Owner newOwner = Owner(
+                                                  id: owner.id,
+                                                  first_name: _first_name,
+                                                  last_name: _last_name,
+                                                  home_number: _home_number,
+                                                  phone_number: _phone_number,
+                                                  code_meli: _code_meli.toString(),
+                                                  email: _email,
+                                                  image: _logo
+                                                );
+                                                await _ownerViewModel.editOwner(newOwner);
+                                                Get.toNamed(HomePage, arguments: newOwner);
+                                              }else{
+                                                Tenant newTenant = Tenant(
+                                                  id: tenant.id,
+                                                  first_name: _first_name,
+                                                  last_name: _last_name,
+                                                  home_number: _home_number,
+                                                  phone_number: _phone_number,
+                                                  code_meli: _code_meli.toString(),
+                                                  email: _email,
+                                                  image: _logo,
+                                                );
+                                                await _tenantViewModel.editTenant(newTenant);
+                                                Get.toNamed(HomePage, arguments: newTenant);
+                                              }
                                             }
                                           },
                                           child: Text(
@@ -412,7 +506,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           ),
                                           onPressed: () {
                                             Get.toNamed(HomePage,
-                                                arguments: widget.Id);
+                                                arguments: widget.user);
                                           },
                                           child: Text(
                                             'انصراف',
@@ -438,20 +532,5 @@ class _OwnerRegisterState extends State<OwnerRegister> {
             ),
           ],
         ));
-  }
-  void findPhone() {
-    // print(code);
-    // code to verify the confirmation code entered by the user
-    _viewModel.searchUsers(widget.Id);
-    _viewModel.users.stream.listen((list) async {
-      setState(() {
-        _owners.addAll(list);
-      });
-      if(_owners.isNotEmpty){
-        for (User item in _owners) {
-          _phone_number = item.phone_number??'';
-        }
-      }
-    });
   }
 }

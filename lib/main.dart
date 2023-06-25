@@ -5,14 +5,19 @@ import 'package:get/get.dart';
 import 'package:material_color_gen/material_color_gen.dart';
 import 'package:villasara_front_end/utils/constants.dart';
 import 'package:villasara_front_end/view/profile/component/profile.dart';
+import 'package:villasara_front_end/view/villaregistration/components/villaRegistration.dart';
 import 'view/car/aboutUs.dart';
 import 'view/car/contact.dart';
 import 'view/car/rules.dart';
+import 'view/homepage/home-page.dart';
 import 'view/maskgroup/components/maskGroup.dart';
+import 'view/preview/component/preview.dart';
 import 'view/purchase/successful.dart';
 import 'view/purchase/unSuccessful.dart';
 
 import 'firebase_options.dart';
+import 'view/villaDetail/component/villa_detail.dart';
+import 'view/villaLists/villa-list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,14 +43,16 @@ class MyApp extends StatelessWidget {
             GetPage(name: AboutPage, page: () => AboutScreen()),
             GetPage(name: ContactUsPage, page: () => ContactUsScreen()),
             GetPage(name: ProfilePage, page: () => UserRegisterScreen()),
-            //GetPage(name: HomePage, page: () => HomeScreen()),
-            //GetPage(name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
-            //GetPage(name: EditOwnerRegisterPage, page: () => EditOwenerRegisterScreen()),
-            //GetPage(name: ProfilePage, page: () => EditProfileDialog(),),
+            GetPage(name: VillaRegistrationPage, page: () => VillaRegisterScreen()),
+            GetPage(name: HomePage, page: () => HomeScreen()),
+            GetPage(name: OwnerRegisterPage, page: () => UserRegisterScreen()),
+            GetPage(name: VillaListPage, page: () => MyVillaScreen()),
+            GetPage(name: VillaDetailPage, page: () => VillaDetail()),
+            GetPage(name: PreviewPage, page: () => PreviewScreen(),),
             GetPage(name: SuccessfulPurchasePage, page: () => SuccessfulPurchaseScreen()),
             GetPage(name: UnSuccessfulPurchasePage, page: () => UnSuccessfulPurchaseScreen()),
           ],
-          //initialRoute: MaskGroupPage,
+          initialRoute: VillaRegistrationPage,
           textDirection: TextDirection.rtl,
           defaultTransition: Transition.noTransition,
           theme: ThemeData(primarySwatch: LightBlueColor.toMaterialColor(),),

@@ -6,8 +6,8 @@ import 'villa_repository.dart';
 class VillaRepositoryImpl extends VillaRepository {
 
   @override
-  Future<List<Villa>> getVillas(int businessOwnerId) async {
-    var response = await dio.get('villa/?business_owner=$businessOwnerId');
+  Future<List<Villa>> getVillas() async {
+    var response = await dio.get('villa/');
     print(
         'response: ${response.statusMessage}   responceCode: ${response.statusCode}');
     if (response.data is List) {
@@ -26,8 +26,47 @@ class VillaRepositoryImpl extends VillaRepository {
   }
 
   @override
-  Future<List<VillaImage>> getImages(int id) async {
-    var response = await dio.get('Images/');
+  Future<List<VillaImage>> getImages() async {
+    var response = await dio.get('villamedia/');
+    print('response: ${response.statusMessage}');
+    if (response.data is List) {
+      List<dynamic> dataList = response.data;
+      List<VillaImage> images = [];
+      for (var data in dataList) {
+        if (data is Map<String, dynamic>) {
+          var image = VillaImage.fromJson(data);
+          images.add(image);
+        }
+      }
+      return images;
+    } else {
+      throw Exception('Invalid response');
+    }
+  }
+
+  @override
+  Future<List<Villa>> searchVillas(int businessOwnerId) async {
+    var response = await dio.get('villa/$businessOwnerId');
+    print(
+        'response: ${response.statusMessage}   responceCode: ${response.statusCode}');
+    if (response.data is List) {
+      List<dynamic> dataList = response.data;
+      List<Villa> villas = [];
+      for (var data in dataList) {
+        if (data is Map<String, dynamic>) {
+          var villa = Villa.fromJson(data);
+          villas.add(villa);
+        }
+      }
+      return villas;
+    } else {
+      throw Exception('Invalid response');
+    }
+  }
+
+  @override
+  Future<List<VillaImage>> searchImages(int id) async {
+    var response = await dio.get('villamedia/$id');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -59,7 +98,7 @@ class VillaRepositoryImpl extends VillaRepository {
   @override
   Future<VillaImage> addImage(VillaImage image) async {
     var response = await dio.post(
-      'Images/',
+      'villamedia/',
       data: image,
     );
     print('response: ${response.statusMessage}');
@@ -80,7 +119,7 @@ class VillaRepositoryImpl extends VillaRepository {
   @override
   Future<void> editImage(VillaImage image) async {
     var response = await dio.patch(
-      'Images/${image.id}/',
+      'villamedia/${image.id}/',
       data: image,
     );
     print('response: ${response.statusMessage}');
@@ -97,7 +136,7 @@ class VillaRepositoryImpl extends VillaRepository {
   @override
   Future<void> deleteImage(VillaImage image) async {
     var response = await dio.delete(
-      'Images/${image.id}/',
+      'villamedia/${image.id}/',
     );
     print('response: ${response.statusMessage}');
   }

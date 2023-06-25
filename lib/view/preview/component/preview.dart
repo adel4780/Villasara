@@ -22,7 +22,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HeaderPanel(ID: 1 /*ID: widget.parameters[0]*/),
+            HeaderPanel(user: widget.parameters[0] /*ID: widget.parameters[0]*/),
             Preview(/*villa : widget.parameters[1]*/),
             Footer(),
           ],

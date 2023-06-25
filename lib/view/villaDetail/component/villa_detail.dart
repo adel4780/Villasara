@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:villasara_front_end/model/entity/villa.dart';
 import 'package:villasara_front_end/utils/constants.dart';
 import '../../header-footer/footer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
-
+import '../../../model/entity/image.dart';
 import '../../header-footer/header_panel.dart';
+import '../../../model/entity/tenant.dart';
+import 'package:villasara_front_end/view_model/owner_viewmodel.dart';
+import 'package:villasara_front_end/model/entity/owner.dart';
+import 'package:villasara_front_end/model/entity/contract.dart';
 
 class VillaDetail extends StatefulWidget {
   VillaDetail({super.key});
@@ -17,6 +22,28 @@ class VillaDetail extends StatefulWidget {
 }
 
 class _VillaDetailState extends State<VillaDetail> {
+  late Contract contract;
+
+  var user;
+  Villa? villa;
+
+  late String _owner_name;
+  final _ownerviewModel = OwnerViewModel();
+  final List<Owner> _owners = [];
+
+  late Tenant tenant;
+
+  @override
+  void initState() {
+    user = widget.parameters[0];
+    villa = widget.parameters[1];
+
+    if (widget.parameters[0] is Tenant) {
+      tenant = widget.parameters[0];
+    }
+    findOwner(villa!.villaOwner);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +53,41 @@ class _VillaDetailState extends State<VillaDetail> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HeaderPanel(ID: widget.parameters[0]),
-            Detail(/*villa : widget.parameters[1]*/),
+            HeaderPanel(user: user),
+            Detail(
+              user: user,
+              villa: villa,
+              tenant: tenant,
+              id: villa?.id,
+              name: villa?.name,
+              vilaOwnerid: villa?.villaOwner,
+              villaOwner: _owner_name,
+              state: Proviences[(villa!.state ?? 0) + 1] ?? "",
+              city: villa?.city,
+              region: villa?.region,
+              address: villa?.address,
+            ),
             Footer(),
           ],
         ),
       ),
     ));
+  }
+
+  void findOwner(int? id) {
+    _ownerviewModel.searchOwners(id);
+    _ownerviewModel.owners.stream.listen((list) async {
+      setState(() {
+        _owners.addAll(list);
+      });
+      if (_owners.isNotEmpty) {
+        for (Owner item in _owners) {
+          String? firstName = item.first_name;
+          String? lastName = item.last_name;
+          _owner_name = "$firstName $lastName" ?? '';
+        }
+      }
+    });
   }
 }
 
@@ -42,22 +97,6 @@ final List<String> imgList = [
   "assets/images/villa_img.png",
   "assets/images/villa_img.png",
   "assets/images/villa_img.png",
-];
-
-final List<String> facilitiesList = [
-  "آب",
-  "شوفاژ",
-  "برق",
-  "کولر آبی",
-  "گاز",
-  "مبلمان",
-  "سرویس بهداشتی فرنگی",
-  "رستوران",
-  "حمام",
-  "لابی",
-  "آسانسور",
-  "سالن کنفرانس",
-  "بخاری",
 ];
 
 final List<Widget> imageSliders = imgList
@@ -72,19 +111,55 @@ final List<Widget> imageSliders = imgList
     .toList();
 
 class Detail extends StatefulWidget {
-  const Detail({super.key});
-
+  Detail({
+    super.key,
+    required this.user,
+    required this.villa,
+    required this.tenant,
+    required this.id,
+    required this.name,
+    required this.vilaOwnerid,
+    required this.villaOwner,
+    required this.state,
+    required this.city,
+    required this.region,
+    required this.address,
+  });
+  var user;
+  Villa? villa;
+  Tenant tenant;
+  late int? id;
+  late String? name;
+  late int? vilaOwnerid;
+  late String? villaOwner;
+  late String? state;
+  late String? city;
+  late String? region;
+  late String? address;
+  late String? description;
+  late double? pricePerNight;
+  late List<VillaImage> images;
   @override
   State<Detail> createState() => _DetailState();
 }
 
 class _DetailState extends State<Detail> {
+  late Contract contract;
+
   final CarouselController _controller = CarouselController();
   int _current = 0;
   int _counter = 0;
 
   String startDay = '';
   String endDay = '';
+
+  @override
+  void initState() {
+    contract.villaOwner = widget.vilaOwnerid;
+    contract.villa = widget.id;
+    contract.tenant = widget.tenant.id;
+    super.initState();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -112,7 +187,7 @@ class _DetailState extends State<Detail> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "اجاره ویلا سه خوابه استخردار چهار فصل چهار باغ کردان",
+                widget.name ?? "",
                 style: TextStyle(
                   fontSize: 15,
                 ),
@@ -121,10 +196,28 @@ class _DetailState extends State<Detail> {
               Row(
                 children: [
                   Icon(Icons.location_on),
-                  Text(
-                    "البرز، کردان",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                  RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: widget.state ?? "",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text: "، ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text: widget.region,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -207,7 +300,14 @@ class _DetailState extends State<Detail> {
                             fontSize: 15,
                           ),
                         ),
-                        Text("به میزبانی صادق فلاح"),
+                        RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(text: "به میزبانی "),
+                              TextSpan(text: widget.villaOwner),
+                            ],
+                          ),
+                        ),
                         HorizonalLine(),
                         Text(
                           "درباره‌ی اقامتگاه",
@@ -216,135 +316,7 @@ class _DetailState extends State<Detail> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text("۴۰۰ متر زیربنا۱۰۰۰ متر کل بنا۳ اتاق"),
-                        Text(
-                          "ظرفیت",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text("ظرفیت تا ۱۰ نفر (۷ نفر پایه + تا ۳ نفر اضافه)"),
-                        Text(
-                          "سرویس‌های خواب",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text("۲ تخت دو نفره۲ تخت یک نفره۳ رخت‌خواب سنتی"),
-                        Text(
-                          "سرویس‌های بهداشتی",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text("سرویس ایرانی ندارد۴ سرویس فرنگی۴ حمام"),
-                        HorizonalLine(),
-                        Text(
-                          "امکانات اقامتگاه",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: facilitiesList.length,
-                                itemBuilder: (context, index) {
-                                  if (index % 2 == 0) {
-                                    String i = facilitiesList[index];
-                                    return Text("$i");
-                                  } else {
-                                    return SizedBox();
-                                  }
-                                },
-                              ),
-                            ),
-                            Expanded(
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: facilitiesList.length,
-                                itemBuilder: (context, index) {
-                                  if (index % 2 != 0) {
-                                    String i = facilitiesList[index];
-                                    return Text("$i");
-                                  } else {
-                                    return SizedBox();
-                                  }
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        HorizonalLine(),
-                        Text(
-                          "نفر اضافه",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                            "هزینه‌ای که برای نفرات بیش از استاندارد (سرویس خواب و …) به مبلغ رزرو اضافه می‌شود."),
-                        Text("قیمت هر نفر اضافه به ازای هر شب: 500 هزار تومان"),
-                        HorizonalLine(),
-                        Text(
-                          "تخفیف‌ها",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text("برای اقامت‌های کوتاه‌مدت 10٪ تخفیف لحاظ می‌شود."),
-                        HorizonalLine(),
-                        Text(
-                          "قوانین و مقررات اقامتگاه",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("ساعت ورود"),
-                                Text(
-                                  "02:00 (بعدازظهر)",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 50,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("ساعت خروج"),
-                                Text(
-                                  "11:00 (صبح)",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                        Text(widget.description ?? ""),
                       ],
                     ),
                   ),
@@ -361,13 +333,22 @@ class _DetailState extends State<Detail> {
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
                         children: [
-                          Text("شروع از: 4,800,000 تومان / هرشب"),
+                          RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                const TextSpan(text: "شروع از "),
+                                TextSpan(
+                                    text:
+                                        widget.pricePerNight.toString() ?? ""),
+                                const TextSpan(text: "تومان / هرشب"),
+                              ],
+                            ),
+                          ),
                           Container(
                             margin: const EdgeInsets.only(
                               top: 10,
                               right: 10,
                               left: 10,
-                              //bottom: 5,
                             ),
                             child: Container(
                               margin: EdgeInsets.only(bottom: 10),
@@ -392,6 +373,14 @@ class _DetailState extends State<Detail> {
                                               .toJalaliDateTime()
                                               .substring(0, 10) ??
                                           "";
+                                      contract.startDate = startDay;
+                                      contract.endDate = endDay;
+                                      contract.totalPrice = (double.parse(
+                                                  endDay.substring(
+                                                      8, endDay.length)) -
+                                              double.parse(startDay.substring(
+                                                  8, startDay.length))) *
+                                          widget.pricePerNight!.toInt();
                                     },
                                   );
                                 },
@@ -489,7 +478,13 @@ class _DetailState extends State<Detail> {
                             ),
                           ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.toNamed(PreviewPage, arguments: [
+                                widget.user,
+                                widget.villa,
+                                contract,
+                              ]);
+                            },
                             child: Text(
                               "رزرو",
                               style: TextStyle(color: WhiteColor),

@@ -49,6 +49,9 @@ dependencies:
   firebase_auth: ^4.4.2
   carousel_slider: ^4.2.1
   persian_datetime_picker: ^2.6.0
+  shamsi_date: ^1.0.1
+  percent_indicator: ^4.2.3
+  image_picker: ^0.8.7+1
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +90,7 @@ flutter:
     - assets/images/villa_img.png
     - assets/images/maskPage.png
     - assets/images/emptyImage.png
+    - assets/images/sadface.png
     
   # To add assets to your application, add an assets section, like this:
   # assets:

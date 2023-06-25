@@ -14,13 +14,13 @@ class VillaImage{
    id: json['id'],
    image: json['image'],
    villa: json['villa'],
-   villaOwner: json['villaOwner'],
+   villaOwner: json['villa_owner'],
    );
   }
   Map<String, dynamic> toJson()=>{
     'id' : id,
     'image': image,
     'villa': villa,
-    'villaOwner': villaOwner,
+    'villa_owner': villaOwner,
   };
 }

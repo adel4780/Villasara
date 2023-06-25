@@ -5,8 +5,8 @@ import '../../utils/constants.dart';
 import 'HF_style.dart';
 
 class HeaderPanel extends StatelessWidget {
-  HeaderPanel({Key? key, required this.ID}) : super(key: key);
-  int ID;
+  HeaderPanel({Key? key, required this.user}) : super(key: key);
+  var user;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -67,13 +67,14 @@ class HeaderPanel extends StatelessWidget {
     );
   }
   Widget profileMenu() {
+
     return PopupMenuButton(
       child: warpText("پروفایل",Icons.person_outline,),
       onSelected: (String choice) async {
         if (choice == 'view_profile') {
-          Get.toNamed(ProfilePage, arguments: ID);
+          Get.toNamed(ProfilePage, arguments: user);
         } else if (choice == 'villa-register') {
-          //Get.toNamed(OwnerRegisterPage, arguments: ID);
+          Get.toNamed(OwnerRegisterPage, arguments: user);
         } else if (choice == 'exit') {
           //SharedPreferences prefs = await SharedPreferences.getInstance();
           //await prefs.remove('user.api_token');
@@ -119,7 +120,7 @@ class HeaderPanel extends StatelessWidget {
 
   Widget haveVillas(String? text) {
     return TextButton(
-      onPressed: () => null,//Get.toNamed(VillaListPage, arguments: ID),
+      onPressed: () => Get.toNamed(VillaListPage, arguments: user),
       style: TextButton.styleFrom(
         backgroundColor: WhiteColor,
       ),
