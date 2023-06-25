@@ -248,31 +248,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(
                                 height: 20.h,
                               ),
-                              /*Container(
-                                alignment: Alignment.centerRight,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "تومان",
-                                      style: TextStyle(
-                                        fontFamily: IranSansWeb,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5.w,
-                                    ),
-                                    Text(
-                                      (villa.pricePerNight.toString().toPersianDigit().seRagham()??""),
-                                      style: TextStyle(
-                                        fontFamily: IranSansWeb,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),*/
                             ],
                           ),
                         ),
@@ -290,21 +265,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> loadData() async {
     villaViewModel.getVillas();
-    villaViewModel.getImage();
     villaViewModel.villas.stream.listen((listVillas) {
-      villaViewModel.Images.stream.listen((listImages) {
-        setState(() {
+    setState(() {
           villas.addAll(listVillas);
-          for (var item in villas) {
-            item.images = [];
-            for (var image in listImages) {
-              if (image.villa == item.id) {
-                item.images!.add(image);
-              }
-            }
-          }
           _gotFromServer = true;
-        });
       });
     });
   }

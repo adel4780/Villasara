@@ -7,7 +7,7 @@ class TenantRepositoryImpl extends TenantRepository {
 
   @override
   Future<List<Tenant>> getTenants() async {
-    var response = await dio.get('tenants/');
+    var response = await dio.get('Tenant/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -25,7 +25,7 @@ class TenantRepositoryImpl extends TenantRepository {
   }
   @override
   Future<List<Tenant>> searchTenants(int id)  async {
-    var response = await dio.get('tenants/');
+    var response = await dio.get('Tenant/$id');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -33,9 +33,7 @@ class TenantRepositoryImpl extends TenantRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var tenant = Tenant.fromJson(data);
-          if(tenant.id == id) {
             tenants.add(tenant);
-          }
         }
       }
       return tenants;
@@ -45,7 +43,7 @@ class TenantRepositoryImpl extends TenantRepository {
   }
   @override
   Future<List<Tenant>> searchPhone(String Phone) async{
-    var response = await dio.get('tenants/');
+    var response = await dio.get('Tenant/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -66,7 +64,7 @@ class TenantRepositoryImpl extends TenantRepository {
   @override
   Future<Tenant> addTenant(Tenant tenant) async {
     var response = await dio.post(
-      'tenants/',
+      'Tenant/',
       data: tenant,
     );
     print('response: ${response.statusMessage}');
@@ -77,7 +75,7 @@ class TenantRepositoryImpl extends TenantRepository {
   @override
   Future<void> editTenant(Tenant tenant) async {
     var response = await dio.patch(
-      'tenants/${tenant.id}/',
+      'Tenant/${tenant.id}/',
       data: tenant,
     );
     print('response: ${response.statusMessage}');
@@ -85,7 +83,7 @@ class TenantRepositoryImpl extends TenantRepository {
   @override
   Future<void> deleteTenant(Tenant tenant) async {
     var response = await dio.delete(
-      'tenants/${tenant.id}/',
+      'Tenant/${tenant.id}/',
     );
     print('response: ${response.statusMessage}');
   }

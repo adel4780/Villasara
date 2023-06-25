@@ -6,7 +6,7 @@ class OwnerRepositoryImpl extends OwnerRepository {
 
   @override
   Future<List<Owner>> getOwners() async {
-    var response = await dio.get('landowners/');
+    var response = await dio.get('landowner/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -24,7 +24,7 @@ class OwnerRepositoryImpl extends OwnerRepository {
   }
   @override
   Future<List<Owner>> searchOwners(int id)  async {
-    var response = await dio.get('landowners/');
+    var response = await dio.get('landowner/$id');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -44,7 +44,7 @@ class OwnerRepositoryImpl extends OwnerRepository {
   }
   @override
   Future<List<Owner>> searchPhone(String Phone) async{
-    var response = await dio.get('landowners/');
+    var response = await dio.get('landowner/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -65,7 +65,7 @@ class OwnerRepositoryImpl extends OwnerRepository {
   @override
   Future<Owner> addOwner(Owner owner) async {
     var response = await dio.post(
-      'landowners/',
+      'landowner/',
       data: owner,
     );
     print('response: ${response.statusMessage}');
@@ -76,7 +76,7 @@ class OwnerRepositoryImpl extends OwnerRepository {
   @override
   Future<void> editOwner(Owner owner) async {
     var response = await dio.patch(
-      'landowners/${owner.id}/',
+      'landowner/${owner.id}/',
       data: owner,
     );
     print('response: ${response.statusMessage}');
@@ -84,7 +84,7 @@ class OwnerRepositoryImpl extends OwnerRepository {
   @override
   Future<void> deleteOwner(Owner owner) async {
     var response = await dio.delete(
-      'landowners/${owner.id}/',
+      'landowner/${owner.id}/',
     );
     print('response: ${response.statusMessage}');
   }

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 //TODO add baseUrl
-const baseUrl = '';
+const baseUrl = '127.0.0.1:8000';
 
 final options = BaseOptions(
   baseUrl: baseUrl,

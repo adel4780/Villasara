@@ -25,8 +25,8 @@ class ContractRepositoryImpl extends ContractRepository {
   }
 
   @override
-  Future<List<Contract>> searchContracts(int businessOwnerId) async {
-    var response = await dio.get('contract/?business_owner=$businessOwnerId');
+  Future<List<Contract>> searchContracts(int villa) async {
+    var response = await dio.get('contract/${villa}');
     print(
         'response: ${response.statusMessage}   responceCode: ${response.statusCode}');
     if (response.data is List) {
@@ -59,7 +59,7 @@ class ContractRepositoryImpl extends ContractRepository {
   @override
   Future<void> editContract(Contract contract) async {
     var response = await dio.patch(
-      'contract/${contract.id}/',
+      'contract/${contract.villa}/',
       data: contract,
     );
     print('response: ${response.statusMessage}');
@@ -69,7 +69,7 @@ class ContractRepositoryImpl extends ContractRepository {
   @override
   Future<void> deleteContract(Contract contract) async {
     var response = await dio.delete(
-      'contract/${contract.id}/',
+      'contract/${contract.villa}/',
     );
     print('response: ${response.statusMessage}');
   }
