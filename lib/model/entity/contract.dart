@@ -22,23 +22,23 @@ class Contract {
   factory Contract.fromJson(Map<String, dynamic> json) {
     return Contract(
         id: json['id'],
-        villaOwner: json['villa_owner'],
+        villaOwner: json['host'],
         villa: json['villa'],
         totalPrice: json['total_price'],
         isConfirmedLandowner: json['is_confirmed_by_landowner'],
         isConfirmedTenant: json['is_confirmed_by_tenant'],
-        tenant: json['tenant'],
+        tenant: json['guest'],
         startDate: json['start_date'],
         endDate: json['end_date']);
   }
   Map<String, dynamic> toJson() => {
         'id': id,
-        'villa_owner': villaOwner,
+        'host': villaOwner,
         'villa': villa,
         'total_price': totalPrice,
         'is_confirmed_by_landowner': isConfirmedLandowner,
         'is_confirmed_by_tenant': isConfirmedTenant,
-        'tenant': tenant,
+        'guest': tenant,
         'start_date': startDate,
         'end_date': endDate,
       };

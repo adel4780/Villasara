@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../model/entity/person.dart';
 import '../../utils/constants.dart';
 import 'HF_style.dart';
 
 class HeaderPanel extends StatelessWidget {
   HeaderPanel({Key? key, required this.user}) : super(key: key);
-  var user;
+  Person user;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -67,14 +68,15 @@ class HeaderPanel extends StatelessWidget {
     );
   }
   Widget profileMenu() {
-
     return PopupMenuButton(
       child: warpText("پروفایل",Icons.person_outline,),
       onSelected: (String choice) async {
         if (choice == 'view_profile') {
           Get.toNamed(ProfilePage, arguments: user);
         } else if (choice == 'villa-register') {
-          Get.toNamed(OwnerRegisterPage, arguments: user);
+          if(user.role == host) {
+            Get.toNamed(OwnerRegisterPage, arguments: user);
+          }
         } else if (choice == 'exit') {
           //SharedPreferences prefs = await SharedPreferences.getInstance();
           //await prefs.remove('user.api_token');

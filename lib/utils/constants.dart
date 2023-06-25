@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../model/entity/tenant.dart';
+import '../model/entity/person.dart';
 
 // Colors
 const Color WhiteColor = Color(0xFFFFFFFF);
@@ -33,7 +33,8 @@ String Phone = "35269854 (031)";
 String Email = "villaSara@gmail.com";
 String Name = "";
 String Address = "اصفهان - میدان آزادی - دانشگاه اصفهان";
-
+String guest = "guest";
+String host = "host";
 // Images
 String Linkedin = "assets/images/linkedin.png";
 String Twitter = "assets/images/twitter.png";
@@ -230,9 +231,9 @@ Widget loading() {
     ),
   );
 }
-bool tenantOrOwner(Object user){
+bool tenantOrOwner(Person person){
   bool TeOw = false;
-  if(user is Tenant){
+  if(person.role == guest){
     TeOw = false;
   }else{
     TeOw = true;
