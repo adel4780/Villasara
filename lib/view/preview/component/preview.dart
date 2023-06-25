@@ -3,6 +3,14 @@ import 'package:get/get.dart';
 import 'package:villasara_front_end/utils/constants.dart';
 import '../../header-footer/footer.dart';
 import '../../header-footer/header_panel.dart';
+import 'package:villasara_front_end/model/entity/villa.dart';
+import 'package:villasara_front_end/model/entity/contract.dart';
+import '../../../model/entity/image.dart';
+import 'package:villasara_front_end/view_model/contract_viewmodel.dart';
+
+class Date {
+  late int d, m, y;
+}
 
 class PreviewScreen extends StatefulWidget {
   PreviewScreen({super.key});
@@ -14,6 +22,18 @@ class PreviewScreen extends StatefulWidget {
 }
 
 class _PreviewScreenState extends State<PreviewScreen> {
+  var user;
+  Villa? villa;
+  late Contract contract;
+
+  @override
+  void initState() {
+    user = widget.parameters[0];
+    villa = widget.parameters[1];
+    contract = widget.parameters[2];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,8 +42,19 @@ class _PreviewScreenState extends State<PreviewScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HeaderPanel(user: widget.parameters[0] /*ID: widget.parameters[0]*/),
-            Preview(/*villa : widget.parameters[1]*/),
+            HeaderPanel(user: user),
+            Preview(
+              user: user,
+              villa: villa,
+              contract: contract,
+              id: villa?.id,
+              name: villa?.name,
+              vilaOwnerid: villa?.villaOwner,
+              state: Proviences[(villa!.state ?? 0) + 1] ?? "",
+              city: villa?.city,
+              region: villa?.region,
+              address: villa?.address,
+            ),
             Footer(),
           ],
         ),
@@ -33,13 +64,66 @@ class _PreviewScreenState extends State<PreviewScreen> {
 }
 
 class Preview extends StatefulWidget {
-  const Preview({super.key});
+  Preview({
+    super.key,
+    required this.user,
+    required this.villa,
+    required this.contract,
+    required this.id,
+    required this.name,
+    required this.vilaOwnerid,
+    required this.state,
+    required this.city,
+    required this.region,
+    required this.address,
+  });
+
+  var user;
+  Villa? villa;
+  Contract contract;
+  late int? id;
+  late String? name;
+  late int? vilaOwnerid;
+  late String? state;
+  late String? city;
+  late String? region;
+  late String? address;
+  late String? description;
+  late double? pricePerNight;
+  late List<VillaImage> images;
 
   @override
   State<Preview> createState() => _PreviewState();
 }
 
 class _PreviewState extends State<Preview> {
+  final _viewModel = ContractViewModel();
+  String? startdate;
+  String? enddate;
+  late int amount;
+  late int period;
+  @override
+  void initState() {
+    startdate = widget.contract!.startDate;
+    enddate = widget.contract!.endDate;
+    Date dt1 = Date();
+    dt1.d = int.parse(startdate!.substring(8, startdate!.length));
+    dt1.m = int.parse(startdate!.substring(5, 7));
+    dt1.y = int.parse(startdate!.substring(0, 4));
+
+    Date dt2 = Date();
+    dt2.d = int.parse(enddate!.substring(8, enddate!.length));
+    dt2.m = int.parse(enddate!.substring(5, 7));
+    dt2.y = int.parse(enddate!.substring(0, 4));
+
+    period = getDifference(dt1, dt2);
+
+    widget.contract!.totalPrice =
+        amount!.toDouble() * widget.villa!.pricePerNight!.toDouble();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,14 +163,35 @@ class _PreviewState extends State<Preview> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "ویلا سه خوابه استخردار چهارفصل چهارباغ کردان",
+                                      widget.villa!.name ?? "",
                                     ),
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    Text(
-                                      "البرز، کردان",
-                                    )
+                                    RichText(
+                                      text: TextSpan(
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: widget.state ?? "",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: "، ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: widget.region,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               )
@@ -107,8 +212,38 @@ class _PreviewState extends State<Preview> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Text("٢ شب × ٥٬٠٠٠٬٠٠٠ تومان"),
-                                  Text("١٠٬٠٠٠٬٠٠٠ تومان"),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: amount.toString(),
+                                        ),
+                                        TextSpan(
+                                          text: " شب ×",
+                                        ),
+                                        TextSpan(
+                                          text: widget.villa!.pricePerNight
+                                              .toString(),
+                                        ),
+                                        TextSpan(
+                                          text: " تومان",
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: widget.contract!.totalPrice
+                                              .toString(),
+                                        ),
+                                        TextSpan(
+                                          text: " تومان",
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
@@ -120,9 +255,29 @@ class _PreviewState extends State<Preview> {
                           SizedBox(
                             height: 15,
                           ),
-                          Text(
-                            "جمع مبلغ قابل پرداخت:   ١٠٬٠٠٠٬٠٠٠ تومان",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: "جمع مبلغ قابل پرداخت: ",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: widget.contract!.totalPrice.toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: " تومان",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 15,
@@ -132,7 +287,9 @@ class _PreviewState extends State<Preview> {
                             height: 15,
                           ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _addContract();
+                            },
                             child: Text(
                               "پرداخت",
                               style: TextStyle(color: WhiteColor),
@@ -156,20 +313,50 @@ class _PreviewState extends State<Preview> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("تاریخ رزرو"),
-                      Text(
-                        "20 خرداد - 22 خرداد",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: widget.contract!.startDate.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const TextSpan(
+                              text: "-",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: widget.contract!.endDate.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
                         height: 15,
                       ),
                       Text("تعداد مسافران"),
-                      Text(
-                        "2 نفر",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                      RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: widget.contract!.peopleCount.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " نفر",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -224,6 +411,47 @@ class _PreviewState extends State<Preview> {
         ),
       ),
     );
+  }
+
+  var monthDays = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 30];
+  int countLeapYears(Date d) {
+    int years = d.y;
+
+    if (d.m <= 2) {
+      years--;
+    }
+
+    return ((years / 4) - (years / 100) + (years / 400)).toInt();
+  }
+
+  int getDifference(Date dt1, Date dt2) {
+    int n1 = dt1.y * 365 + dt1.d;
+    for (int i = 0; i < dt1.m - 1; i++) {
+      n1 += monthDays[i];
+    }
+    n1 += countLeapYears(dt1);
+    int n2 = dt2.y * 365 + dt2.d;
+    for (int i = 0; i < dt2.m - 1; i++) {
+      n2 += monthDays[i];
+    }
+    n2 += countLeapYears(dt2);
+    return (n2 - n1) + 1;
+  }
+
+  void _addContract() {
+    _viewModel.addContract(widget.contract).asStream().listen((event) async {
+      if (event.id! > 0) {
+        Get.toNamed(
+          SuccessfulPurchasePage,
+          arguments: [
+            period,
+            amount,
+            widget.contract.totalPrice,
+            widget.user,
+          ],
+        );
+      }
+    });
   }
 }
 
