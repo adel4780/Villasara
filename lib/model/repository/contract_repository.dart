@@ -1,7 +1,7 @@
 import '../entity/contract.dart';
 
 abstract class ContractRepository{
-  Future<List<Contract>> getContracts();
+  Future<List<Contract>> getContracts(int id);
 
   Future<List<Contract>> searchContracts(int businessOwnerId);
 

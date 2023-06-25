@@ -10,10 +10,12 @@ import 'package:villasara_front_end/view_model/villa_viewmodel.dart';
 import '../../model/entity/villa.dart';
 import '../../utils/constants.dart';
 import '../header-footer/footer.dart';
+import 'search.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
   var user = Get.arguments;
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -52,6 +54,10 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 10.h,
               ),
+              search(),
+              SizedBox(
+                height: 10.h,
+              ),
               _gotFromServer != false
                   ? SizedBox(
                       width: MediaQuery.of(context).size.width * 0.9,
@@ -63,6 +69,46 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget search() {
+    void updateQuantities(List<Villa> updatedVillas) {
+      setState(() {
+        villas = [...updatedVillas]; // update the villa list
+      });
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        SizedBox(
+          width: 20.w,
+          height: 20.h,
+          child: IconButton(
+            icon: const Icon(
+              Icons.search,
+              size: 24,
+              color: BlackColor,
+            ),
+            onPressed: () async {
+              List<Villa> updatedVillas = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SearchScreen(
+                    searchVillas: villas,
+                    onSearch: updateQuantities,
+                    // pass updateQuantities as a callback
+                  ),
+                ),
+              );
+              if (updatedVillas != null) {
+                // check if the user pressed back or not
+                setState(() {});
+              }
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -98,7 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 textDirection: TextDirection.rtl,
                 child: InkWell(
                   onTap: () {
-                    Get.toNamed(VillaDetailPage, arguments: [widget.user, villa]);
+                    Get.toNamed(VillaDetailPage,
+                        arguments: [widget.user, villa]);
                   },
                   child: Container(
                     padding: EdgeInsets.only(top: 10.h, right: 20.h),
@@ -142,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )
                                       : Image.memory(
                                           base64
-                                              .decode(villa.images![0].image!),
+                                              .decode(villa.images![0]),
                                           fit: BoxFit.cover,
                                           width: 100.w,
                                           height: 100.h,
@@ -266,9 +313,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> loadData() async {
     villaViewModel.getVillas();
     villaViewModel.villas.stream.listen((listVillas) {
-    setState(() {
-          villas.addAll(listVillas);
-          _gotFromServer = true;
+      setState(() {
+        villas.addAll(listVillas);
+        _gotFromServer = true;
       });
     });
   }

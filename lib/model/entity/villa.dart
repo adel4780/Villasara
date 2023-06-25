@@ -10,7 +10,7 @@ class Villa {
   String? address;
   String? description;
   double? pricePerNight;
-  List<VillaImage>? images;
+  List<String>? images;
   String? createdAt;
   String? startDate;
   String? endDate;
