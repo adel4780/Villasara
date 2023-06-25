@@ -9,8 +9,8 @@ class ContractViewModel extends ChangeNotifier {
   StreamController<List<Contract>> villas =
   StreamController<List<Contract>>();
 
-  Future<void> getContracts() async {
-    villas.add(await repository.getContracts());
+  Future<void> getContracts(int id) async {
+    villas.add(await repository.getContracts(id));
     notifyListeners();
   }
 

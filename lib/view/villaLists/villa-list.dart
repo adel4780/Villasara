@@ -285,7 +285,7 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
   }
   // TODO villa contracts List
   Future<void> searchReservedVillas(int? id) async{
-    _contractViewModel.searchContracts(id??0);
+    _contractViewModel.getContracts(id??0);
     _contractViewModel.villas.stream.listen((list) {
       setState(() {
         _contracts.addAll(list);

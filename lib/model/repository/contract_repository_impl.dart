@@ -5,7 +5,7 @@ import 'contract_repository.dart';
 class ContractRepositoryImpl extends ContractRepository {
 
   @override
-  Future<List<Contract>> getContracts() async {
+  Future<List<Contract>> getContracts(int id) async {
     var response = await dio.get('contract/');
     print(
         'response: ${response.statusMessage}   responceCode: ${response.statusCode}');
@@ -15,7 +15,9 @@ class ContractRepositoryImpl extends ContractRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var contract = Contract.fromJson(data);
-          contracts.add(contract);
+          if(id == contract.tenant){
+            contracts.add(contract);
+          }
         }
       }
       return contracts;
