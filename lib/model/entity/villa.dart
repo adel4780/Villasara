@@ -36,7 +36,7 @@ class Villa{
       region: json['region'],
       address: json['address'],
       description: json['description'],
-      pricePerNight: json['pricePerNight'],
+      pricePerNight: json['price_per_night'],
       createdAt: json['created_at']
     );
   }
@@ -49,6 +49,6 @@ class Villa{
     'region': region,
     'address': address,
     'description': description,
-    'pricePerNight': pricePerNight,
+    'price_per_night': pricePerNight,
   };
 }
