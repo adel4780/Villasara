@@ -198,7 +198,7 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      onPressed: () {/*Get.toNamed(CategoriesPage, arguments: villa.id);*/},
+                      onPressed: () {Get.toNamed(VillaEditPage, arguments: [widget.user ,villa]);},
                       child: buttonTextStyle(
                         'ویرایش اطلاعات',
                       ),

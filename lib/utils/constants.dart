@@ -21,6 +21,7 @@ String SuccessfulPurchasePage = "/successfulPurchasePage";
 String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
 String ProfilePage = "/profilepage";
 String VillaRegistrationPage = "/villaregistrationpage";
+String VillaEditPage = "/villaeditpage";
 String VillaDetailPage = "/villaDetailPage";
 String VillaListPage = "/villaListPage";
 String OwnerRegisterPage = "/ownerRegisterPage";
