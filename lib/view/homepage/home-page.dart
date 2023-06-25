@@ -189,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )
                                       : Image.memory(
                                           base64
-                                              .decode(villa.images![0].image!),
+                                              .decode(villa.images![0]),
                                           fit: BoxFit.cover,
                                           width: 100.w,
                                           height: 100.h,
