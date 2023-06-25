@@ -44,6 +44,7 @@ class Villa {
       createdAt: json['created_at'],
       startDate: json['startDate'],
       endDate: json['endDate'],
+      images: json['images'],
     );
   }
   Map<String, dynamic> toJson() => {
@@ -58,5 +59,6 @@ class Villa {
         'pricePerNight': pricePerNight,
         'startDate': startDate,
         'endDate': endDate,
+        'images': images,
       };
 }

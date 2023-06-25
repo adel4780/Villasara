@@ -16,7 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:html' as html;
 class UserRegisterScreen extends StatefulWidget {
   UserRegisterScreen({Key? key}) : super(key: key);
-  var user = Owner(id: 1,phone_number: "0123");
+  var user = Get.arguments;
 
   @override
   _UserRegisterScreen createState() => _UserRegisterScreen();
@@ -391,6 +391,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     ],
                                   ),
                                   SizedBox(height: 24.0.h),
+                                  //images
                                   Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
