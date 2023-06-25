@@ -24,7 +24,7 @@ class OwnerRepositoryImpl extends OwnerRepository {
   }
   @override
   Future<List<Owner>> searchOwners(int id)  async {
-    var response = await dio.get('landowner/$id');
+    var response = await dio.get('landowner/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
