@@ -7,6 +7,7 @@ import 'package:villasara_front_end/model/entity/villa.dart';
 import 'package:villasara_front_end/model/entity/contract.dart';
 import '../../../model/entity/image.dart';
 import 'package:villasara_front_end/view_model/contract_viewmodel.dart';
+import 'dart:convert';
 
 class Date {
   late int d, m, y;
@@ -102,8 +103,12 @@ class _PreviewState extends State<Preview> {
   String? enddate;
   late int amount;
   late int period;
+
+  late String _image;
   @override
   void initState() {
+    _image = widget.villa!.images![0];
+
     startdate = widget.contract!.startDate;
     enddate = widget.contract!.endDate;
     Date dt1 = Date();
@@ -153,8 +158,8 @@ class _PreviewState extends State<Preview> {
                         children: [
                           Row(
                             children: [
-                              Image.asset(
-                                "assets/images/villa_img.png",
+                              Image.memory(
+                                base64Decode(_image),
                                 height: 100,
                                 width: 200,
                               ),

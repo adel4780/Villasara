@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:villasara_front_end/model/entity/villa.dart';
@@ -87,25 +88,6 @@ class _VillaDetailState extends State<VillaDetail> {
   }
 }
 
-final List<String> imgList = [
-  "assets/images/villa_img.png",
-  "assets/images/villa_img.png",
-  "assets/images/villa_img.png",
-  "assets/images/villa_img.png",
-  "assets/images/villa_img.png",
-];
-
-final List<Widget> imageSliders = imgList
-    .map((item) => Container(
-          child: Container(
-            margin: EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Image.asset(item, fit: BoxFit.cover, width: 1000.0)),
-          ),
-        ))
-    .toList();
-
 class Detail extends StatefulWidget {
   Detail({
     super.key,
@@ -146,6 +128,8 @@ class _DetailState extends State<Detail> {
   int _current = 0;
   int _counter = 0;
 
+  List<String>? _imgList = [];
+
   String startDay = '';
   String endDay = '';
 
@@ -154,6 +138,7 @@ class _DetailState extends State<Detail> {
     contract.villaOwner = widget.vilaOwnerid;
     contract.villa = widget.id;
     contract.tenant = widget.tenant.id;
+    _imgList = widget.villa!.images;
     super.initState();
   }
 
@@ -172,6 +157,22 @@ class _DetailState extends State<Detail> {
       });
     }
   }
+
+  late List<Widget> imageSliders = _imgList!
+      .map((_image) => Container(
+            child: Container(
+              margin: EdgeInsets.all(5.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                child: Image.memory(
+                  base64Decode(_image),
+                  fit: BoxFit.cover,
+                  width: 1000.0,
+                ),
+              ),
+            ),
+          ))
+      .toList();
 
   @override
   Widget build(BuildContext context) {
