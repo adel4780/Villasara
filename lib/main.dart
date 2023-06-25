@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: SuccessfulPurchasePage, page: () => SuccessfulPurchaseScreen()),
             GetPage(name: UnSuccessfulPurchasePage, page: () => UnSuccessfulPurchaseScreen()),
           ],
-          initialRoute: VillaRegistrationPage,
+          initialRoute: MaskGroupPage,
           textDirection: TextDirection.rtl,
           defaultTransition: Transition.noTransition,
           theme: ThemeData(primarySwatch: LightBlueColor.toMaterialColor(),),
