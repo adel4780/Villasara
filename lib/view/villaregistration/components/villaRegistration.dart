@@ -15,7 +15,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:html' as html;
 class VillaRegisterScreen extends StatefulWidget {
   VillaRegisterScreen({Key? key}) : super(key: key);
-  Owner user = Owner(id: 1,phone_number: "0123");
+  Owner user = Get.arguments;
 
   @override
   _VillaRegisterScreen createState() => _VillaRegisterScreen();
@@ -32,7 +32,7 @@ class _VillaRegisterScreen extends State<VillaRegisterScreen> {
               children: [
                 HeaderPanel(user: widget.user),
                 VillaRegister(
-                  Id: widget.user.id,
+                  user: widget.user,
                 ),
                 SizedBox(height: 32.r),
                 Footer(),
@@ -46,15 +46,15 @@ class _VillaRegisterScreen extends State<VillaRegisterScreen> {
 }
 
 class VillaRegister extends StatefulWidget {
-  VillaRegister({Key? key, required this.Id}) : super(key: key);
-  var Id;
+  VillaRegister({Key? key, required this.user}) : super(key: key);
+  Owner user;
   @override
   State<VillaRegister> createState() => _VillaRegisterState();
 }
 
 class _VillaRegisterState extends State<VillaRegister> {
   //dropdown options for type of business
-  var userId;
+  late int userId;
   final _formKey = GlobalKey<FormState>();
 
   List<html.File?> _image =[null,null,null];
@@ -715,7 +715,7 @@ class _VillaRegisterState extends State<VillaRegister> {
                                         ),
                                         onPressed: () async {
                                           if (_formKey.currentState!.validate()) {
-                                            userId = widget.Id;
+                                            int userId = widget.user.id??0;
                                             Villa villa = Villa(
                                               id: userId,
                                               name: _name,
@@ -732,7 +732,7 @@ class _VillaRegisterState extends State<VillaRegister> {
 
                                             await _viewModel.addVilla(villa);
                                             Get.toNamed(HomePage,
-                                                arguments: userId);
+                                                arguments: widget.user);
                                           }
                                         },
                                         child: Text(
@@ -755,7 +755,7 @@ class _VillaRegisterState extends State<VillaRegister> {
                                         ),
                                         onPressed: () {
                                           Get.toNamed(HomePage,
-                                              arguments: widget.Id);
+                                              arguments: widget.user);
                                         },
                                         child: Text(
                                           'انصراف',
