@@ -118,8 +118,8 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         } else {
           Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "host");
           person = await _personViewModel.addPerson(item);
+          await Future.delayed(const Duration(seconds: 3));
         }
-        await Future.delayed(const Duration(seconds: 5));
         Get.toNamed(HomePage, arguments: person);
       });
     }else{
@@ -137,8 +137,8 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         } else {
           Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "guest");
           person = await _personViewModel.addPerson(item);
+          await Future.delayed(const Duration(seconds: 3));
         }
-        await Future.delayed(const Duration(seconds: 5));
         Get.toNamed(HomePage, arguments: person);
       });
     }
