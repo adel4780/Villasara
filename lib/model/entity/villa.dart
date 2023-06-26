@@ -17,18 +17,18 @@ class Villa {
 
   Villa({
     this.id,
-    this.name,
-    this.villaOwner,
-    this.state,
-    this.city,
-    this.region,
-    this.address,
-    this.description,
-    this.pricePerNight,
-    this.images,
+    required this.name,
+    required this.villaOwner,
+    required this.state,
+    required this.city,
+    required this.region,
+    required this.address,
+    required this.description,
+    required this.pricePerNight,
+    required this.images,
     this.createdAt,
-    this.startDate,
-    this.endDate,
+    required this.startDate,
+    required this.endDate,
   });
   factory Villa.fromJson(Map<String, dynamic> json) {
     return Villa(
@@ -40,15 +40,15 @@ class Villa {
       region: json['region'],
       address: json['address'],
       description: json['description'],
-      pricePerNight: json['pricePerNight'],
+      pricePerNight: double.parse(json['price_per_night']),
       createdAt: json['created_at'],
-      startDate: json['startDate'],
-      endDate: json['endDate'],
+      startDate: json['start_date'],
+      endDate: json['end_date'],
       images: json['images'],
     );
   }
   Map<String, dynamic> toJson() => {
-        'id': id,
+        //'id': id,
         'name': name,
         'villa_owner': villaOwner,
         'state': state,
@@ -56,9 +56,9 @@ class Villa {
         'region': region,
         'address': address,
         'description': description,
-        'pricePerNight': pricePerNight,
-        'startDate': startDate,
-        'endDate': endDate,
+        'price_per_night': pricePerNight,
+        'start_date': startDate,
+        'end_date': endDate,
         'images': images,
       };
 }

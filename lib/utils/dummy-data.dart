@@ -23,7 +23,7 @@ List dummyVilla = [
       "", "", "",
     ],
     description: "سه خوابه - حمام",
-    pricePerNight: 3000,
+    pricePerNight: 3000, startDate: '', endDate: '',
   ),
   Villa(
     id: 2,
@@ -37,7 +37,7 @@ List dummyVilla = [
       "", "", "",
     ],
     description: "دو خوابه",
-    pricePerNight: 2000,
+    pricePerNight: 2000, startDate: '', endDate: '',
   ),
   Villa(
     id: 3,
@@ -51,7 +51,7 @@ List dummyVilla = [
       "", "", "",
     ],
     description: "استخر دار",
-    pricePerNight: 4000,
+    pricePerNight: 4000, startDate: '', endDate: '',
   ),
 ];
 
@@ -64,7 +64,7 @@ List dummyContract = [
     totalPrice: 1000000,
     peopleCount: 4,
     startDate: "1402-04-07",
-    endDate: "1402-04-14",
+    endDate: "1402-04-14", landownerPhone: '',
   ),
   Contract(
     id: 2,
@@ -74,7 +74,7 @@ List dummyContract = [
     totalPrice: 2000000,
     peopleCount: 3,
     startDate: "1402-05-07",
-    endDate: "1402-05-14",
+    endDate: "1402-05-14", landownerPhone: '',
   ),
   Contract(
     id: 3,
@@ -84,6 +84,6 @@ List dummyContract = [
     totalPrice: 3000000,
     peopleCount: 2,
     startDate: "1402-06-07",
-    endDate: "1402-06-14",
+    endDate: "1402-06-14", landownerPhone: '',
   ),
 ];

@@ -728,8 +728,7 @@ class _VillaRegisterState extends State<VillaRegister> {
                                               description: _about,
                                               images: _logo,
                                             );
-
-                                            await _viewModel.addVilla(villa);
+                                            _viewModel.addVilla(villa);
                                             Get.toNamed(HomePage,
                                                 arguments: widget.user);
                                           }

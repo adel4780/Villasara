@@ -11,8 +11,7 @@ final options = BaseOptions(
   contentType: 'application/json',
   headers: {
     //TODO add token
-    // "Authorization": "Token de0f00e7167f66057f46b9816e6cc1d88f663fe8",
+    "Authorization": "Token 45e54d4a5a4907acffbea9155c8e0686526f7629",
   },
 );
-
 final dio = Dio(options);

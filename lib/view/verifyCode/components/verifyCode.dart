@@ -34,7 +34,8 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     try{
       PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: userOTP);
       await auth.signInWithCredential(credential);
-      _confirmCode();
+      //_confirmCode();
+
 
     } on FirebaseAuthException catch(e){
       print(e.toString());
@@ -102,7 +103,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   }
 
   void _confirmCode() {
-    Person person = Person(phone_number: "");
+    Person person = Person(phone_number: "", role: "");
     if(widget.role == 'host'){
       // print(code);
       // code to verify the confirmation code entered by the user
@@ -113,10 +114,12 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         });
         if(_personList.isNotEmpty){
           for (var item in _personList) {
+            if(item.role == host){
             person = item;
+            }
           }
         } else {
-          Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "host");
+          Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "host", email: '');
           person = await _personViewModel.addPerson(item);
           await Future.delayed(const Duration(seconds: 3));
         }
@@ -132,10 +135,12 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         });
         if(_personList.isNotEmpty){
           for (var item in _personList) {
+            if(item.role == guest){
             person = item;
+            }
           }
         } else {
-          Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "guest");
+          Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "guest", email: '');
           person = await _personViewModel.addPerson(item);
           await Future.delayed(const Duration(seconds: 3));
         }
@@ -237,8 +242,9 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                 ),
               ),
               onPressed: () async {
-                verifyOTP(widget.verificationId,
+                /*verifyOTP(widget.verificationId,
                 t0.text + t1.text + t2.text + t3.text + t4.text + t5.text);
+                */
                 _confirmCode();
               }),
         ),

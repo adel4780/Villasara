@@ -18,11 +18,11 @@ class PersonViewModel extends ChangeNotifier {
     notifyListeners();
   }
   void searchGuestPhone(String Phone, String role) async {
-    persons.add(await repository.searchHostPhone(Phone, role));
+    persons.add(await repository.searchGuestPhone(Phone, role));
     notifyListeners();
   }
   void searchHostPhone(String Phone, String role) async {
-    persons.add(await repository.searchGuestPhone(Phone, role));
+    persons.add(await repository.searchHostPhone(Phone, role));
     notifyListeners();
   }
   Future<Person> addPerson(Person person) async {
