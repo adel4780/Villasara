@@ -78,6 +78,7 @@ class HeaderPanel extends StatelessWidget {
             Get.toNamed(VillaRegistrationPage, arguments: user);
           }
         } else if (choice == 'exit') {
+          Get.toNamed(MaskGroupPage);
           //SharedPreferences prefs = await SharedPreferences.getInstance();
           //await prefs.remove('user.api_token');
         }
