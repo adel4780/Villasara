@@ -114,15 +114,14 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         });
         if(_personList.isNotEmpty){
           for (var item in _personList) {
-            if(item.role == host){
             person = item;
-            }
           }
         } else {
           Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "host", email: '',image: "");
           person = await _personViewModel.addPerson(item);
-          await Future.delayed(const Duration(seconds: 3));
+          await Future.delayed(const Duration(seconds: 5));
         }
+        print("person.id: +++++++++++++++++++++++${person.id}");
         Get.toNamed(HomePage, arguments: person);
       });
     }else{
@@ -135,15 +134,14 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         });
         if(_personList.isNotEmpty){
           for (var item in _personList) {
-            if(item.role == guest){
             person = item;
-            }
           }
         } else {
           Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "guest", email: '',image: "");
           person = await _personViewModel.addPerson(item);
-          await Future.delayed(const Duration(seconds: 3));
+          await Future.delayed(const Duration(seconds: 5));
         }
+        print("person.id: *******************${person.id}");
         Get.toNamed(HomePage, arguments: person);
       });
     }

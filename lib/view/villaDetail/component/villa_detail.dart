@@ -34,10 +34,7 @@ class _VillaDetailState extends State<VillaDetail> {
   void initState() {
     user = widget.parameters[0];
     villa = widget.parameters[1];
-
-    if (user.role == guest) {
-      tenant = widget.parameters[0];
-    }
+    tenant = widget.parameters[0];
     findOwner(villa!.villaOwner);
     super.initState();
   }
@@ -103,7 +100,7 @@ class Detail extends StatefulWidget {
     required this.region,
     required this.address,
   });
-  var user;
+  Person user;
   Villa? villa;
   Person tenant;
   late int? id =0;
@@ -475,6 +472,7 @@ class _DetailState extends State<Detail> {
                           ElevatedButton(
                             onPressed: contract.peopleCount != 0
                                 ? () {
+
                                     Get.toNamed(PreviewPage, arguments: [
                                       widget.user,
                                       widget.villa,

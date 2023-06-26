@@ -77,5 +77,4 @@ class ContractRepositoryImpl extends ContractRepository {
     );
     print('response: ${response.statusMessage}');
   }
-
 }

@@ -3,7 +3,7 @@ class Contract {
   int? villaOwner;
   int? villa;
   int? tenant;
-  double? totalPrice;
+  String? totalPrice;
   int? peopleCount;
   String? startDate;
   String? endDate;
@@ -28,7 +28,7 @@ class Contract {
       id: json['id'],
       villaOwner: json['host'],
       villa: json['villa'],
-      totalPrice: double.parse(json['total_price']),
+      totalPrice: json['total_price'],
       peopleCount: int.parse(json['people_count']),
       tenant: json['guest'],
       startDate: json['start_date'],

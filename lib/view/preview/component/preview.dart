@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:villasara_front_end/utils/constants.dart';
+import '../../../model/entity/person.dart';
 import '../../header-footer/footer.dart';
 import '../../header-footer/header_panel.dart';
 import 'package:villasara_front_end/model/entity/villa.dart';
@@ -23,15 +24,19 @@ class PreviewScreen extends StatefulWidget {
 }
 
 class _PreviewScreenState extends State<PreviewScreen> {
-  var user;
-  Villa? villa;
+  late Person user;
+  late Villa villa;
   late Contract contract;
 
   @override
   void initState() {
     user = widget.parameters[0];
+    print("id : ----------------------------------------------${user.id}");
     villa = widget.parameters[1];
     contract = widget.parameters[2];
+    contract.is_confirmed_by_tenant = false;
+    contract.is_confirmed_by_landowner = false;
+    contract.tenant = user.id;
     super.initState();
   }
 
@@ -79,7 +84,7 @@ class Preview extends StatefulWidget {
     required this.address,
   });
 
-  var user;
+  Person user;
   Villa? villa;
   Contract contract;
   late int? id =0;
@@ -101,16 +106,16 @@ class _PreviewState extends State<Preview> {
   final _viewModel = ContractViewModel();
   String? startdate="";
   String? enddate="";
-  late int amount=0;
+  late double amount;
   late int period=0;
 
   late String _image;
   @override
   void initState() {
     _image = widget.villa!.image1 ?? "";
-
     startdate = widget.contract!.startDate;
     enddate = widget.contract!.endDate;
+
     Date dt1 = Date();
     dt1.d = int.parse(startdate!.substring(8, startdate!.length));
     dt1.m = int.parse(startdate!.substring(5, 7));
@@ -124,7 +129,8 @@ class _PreviewState extends State<Preview> {
     period = getDifference(dt1, dt2);
 
     widget.contract!.totalPrice =
-        amount!.toDouble() * widget.villa!.pricePerNight!.toDouble();
+    (period * widget.villa!.pricePerNight!.toDouble()).toString();
+    amount = double.parse(widget.contract!.totalPrice??"");
 
     super.initState();
   }
@@ -444,6 +450,8 @@ class _PreviewState extends State<Preview> {
   }
 
   void _addContract() {
+    widget.contract.tenant = widget.user.id;
+
     _viewModel.addContract(widget.contract).asStream().listen((event) async {
       if (event.id! > 0) {
         Get.toNamed(

@@ -41,7 +41,7 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
       tenant = widget.user;
       searchReservedVillas(tenant.id).then((_) => Timer(Duration(seconds: 10), (){
         setState((){
-          _showNoSub = _contracts.isEmpty;
+          _showNoSub = _contracts.isEmpty && _villas.isEmpty;
         });
       }));
     }else{
