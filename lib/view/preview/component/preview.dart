@@ -107,7 +107,7 @@ class _PreviewState extends State<Preview> {
   late String _image;
   @override
   void initState() {
-    _image = widget.villa!.images![0];
+    _image = widget.villa!.image1 ?? "";
 
     startdate = widget.contract!.startDate;
     enddate = widget.contract!.endDate;

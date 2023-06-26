@@ -138,7 +138,9 @@ class _DetailState extends State<Detail> {
     contract.villaOwner = widget.vilaOwnerid;
     contract.villa = widget.id;
     contract.tenant = widget.tenant.id;
-    _imgList = widget.villa!.images;
+    _imgList!.add(widget.villa!.image1 ?? "");
+    _imgList!.add(widget.villa!.image2 ?? "");
+    _imgList!.add(widget.villa!.image3 ?? "");
     super.initState();
   }
 
