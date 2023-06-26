@@ -454,6 +454,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                                   code_meli: _code_meli.toString(),
                                                   email: _email,
                                                   role: widget.user.role,
+                                                  image:_logo
                                                 );
                                                 await _personViewModel.editPerson(newPesron);
                                                 Get.toNamed(HomePage, arguments: newPesron);

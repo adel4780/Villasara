@@ -103,7 +103,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   }
 
   void _confirmCode() {
-    Person person = Person(phone_number: "", role: "");
+    Person person = Person(phone_number: "", role: "",image: "");
     if(widget.role == 'host'){
       // print(code);
       // code to verify the confirmation code entered by the user
@@ -119,7 +119,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
             }
           }
         } else {
-          Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "host", email: '');
+          Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "host", email: '',image: "");
           person = await _personViewModel.addPerson(item);
           await Future.delayed(const Duration(seconds: 3));
         }
@@ -140,7 +140,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
             }
           }
         } else {
-          Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "guest", email: '');
+          Person item = await Person(phone_number: widget.phoneNumber,first_name: "",last_name: "", role: "guest", email: '',image: "");
           person = await _personViewModel.addPerson(item);
           await Future.delayed(const Duration(seconds: 3));
         }

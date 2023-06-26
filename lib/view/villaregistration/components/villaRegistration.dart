@@ -718,7 +718,7 @@ class _VillaRegisterState extends State<VillaRegister> {
                                             Villa villa = Villa(
                                               villaOwner: widget.user.id,
                                               name: _name,
-                                              state: _state,
+                                              state: _state-1,
                                               city: _city,
                                               region: _region,
                                               address: _address,
