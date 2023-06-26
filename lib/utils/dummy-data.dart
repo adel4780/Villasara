@@ -1,3 +1,4 @@
+/*
 import 'package:villasara_front_end/model/entity/contract.dart';
 import 'package:villasara_front_end/model/entity/person.dart';
 import 'package:villasara_front_end/model/entity/villa.dart';
@@ -87,3 +88,4 @@ List dummyContract = [
     endDate: "1402-06-14", landownerPhone: '',
   ),
 ];
+*/

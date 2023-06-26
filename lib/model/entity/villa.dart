@@ -54,19 +54,19 @@ class Villa {
     );
   }
   Map<String, dynamic> toJson() => {
-        //'id': id,
-        'name': name,
-        'villa_owner': villaOwner,
-        'state': state,
-        'city': city,
-        'region': region,
-        'address': address,
-        'description': description,
-        'price_per_night': pricePerNight,
-        'start_date': startDate,
-        'end_date': endDate,
-        'villa_image1': image1,
-        'villa_image2': image2,
-        'villa_image3': image3,
-      };
+    //'id': id,
+    'name': name,
+    'villa_owner': villaOwner,
+    'state': state,
+    'city': city,
+    'region': region,
+    'address': address,
+    'description': description,
+    'price_per_night': pricePerNight,
+    'start_date': startDate,
+    'end_date': endDate,
+    'villa_image1': image1,
+    'villa_image2': image2,
+    'villa_image3': image3,
+  };
 }

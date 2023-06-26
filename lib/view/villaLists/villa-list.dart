@@ -39,14 +39,14 @@ class _MyVillaScreenState extends State<MyVillaScreen> {
   initState() {
     if(widget.user.role == guest){
       tenant = widget.user;
-      searchReservedVillas(tenant.id).then((_) => Timer(Duration(seconds: 6), (){
+      searchReservedVillas(tenant.id).then((_) => Timer(Duration(seconds: 10), (){
         setState((){
           _showNoSub = _contracts.isEmpty;
         });
       }));
     }else{
       owner = widget.user;
-      searchVilla(owner.id).then((_) => Timer(Duration(seconds: 5), (){
+      searchVilla(owner.id).then((_) => Timer(Duration(seconds: 10), (){
         setState((){
           _showNoSub = _villas.isEmpty;
         });

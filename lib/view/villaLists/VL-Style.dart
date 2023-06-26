@@ -9,7 +9,7 @@ Widget villaTitle(Villa villa) {
   String? name = villa.name??"";
   String? state = Proviences[villa.state??0];
   String? city = villa.city;
-  String? Logo = villa.images![0];
+  String? Logo = villa.image1;
   return Wrap(
     children: [
       Column(
@@ -94,7 +94,7 @@ Widget contractTitle(Contract contract, Villa villa) {
   String? name = villa.name??"";
   String? state = Proviences[villa.state??0] ?? "";
   String? city = villa.city;
-  String? Logo = villa.images![0] ?? "";
+  String? Logo = villa.image1 ?? "";
   String? startDate = contract.startDate ?? "";
   String? endDate = contract.endDate ?? "";
   String? address = villa.address ?? "";

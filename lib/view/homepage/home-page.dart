@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 100.h,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8.r),
-                                  child: villa.images == null
+                                  child: villa.image1 == null
                                       ? Image.asset(
                                           EmptyImg,
                                           width: 100.w,
@@ -193,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )
                                       : Image.memory(
                                           base64
-                                              .decode(villa.images![0]),
+                                              .decode(villa.image1!),
                                           fit: BoxFit.cover,
                                           width: 100.w,
                                           height: 100.h,
@@ -209,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                 ),
                               ),
-                              if (villa.images == null)
+                              if (villa.image1 == null)
                                 const Positioned.fill(
                                   child: Center(
                                     child: CircularProgressIndicator(),
