@@ -48,7 +48,7 @@ class HeaderPanel extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    /*Get.toNamed(HomePage, arguments: ID);*/
+                    Get.toNamed(HomePage, arguments: user);
                   },
                   child: warpText('خانه', Icons.home_outlined),
                 ),
@@ -75,7 +75,7 @@ class HeaderPanel extends StatelessWidget {
           Get.toNamed(ProfilePage, arguments: user);
         } else if (choice == 'villa-register') {
           if(user.role == host) {
-            Get.toNamed(OwnerRegisterPage, arguments: user);
+            Get.toNamed(VillaRegistrationPage, arguments: user);
           }
         } else if (choice == 'exit') {
           //SharedPreferences prefs = await SharedPreferences.getInstance();
