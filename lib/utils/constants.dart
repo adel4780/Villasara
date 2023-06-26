@@ -24,7 +24,6 @@ String VillaRegistrationPage = "/villaregistrationpage";
 String VillaEditPage = "/villaeditpage";
 String VillaDetailPage = "/villaDetailPage";
 String VillaListPage = "/villaListPage";
-String OwnerRegisterPage = "/ownerRegisterPage";
 String PreviewPage = "/preiewPage";
 //Strings, Names, Address
 String AppName = "ویلا سرا";

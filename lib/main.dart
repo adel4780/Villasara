@@ -47,7 +47,6 @@ class MyApp extends StatelessWidget {
             GetPage(name: VillaRegistrationPage, page: () => VillaRegisterScreen()),
             GetPage(name: VillaEditPage, page: () => VillaEditScreen()),
             GetPage(name: HomePage, page: () => HomeScreen()),
-            GetPage(name: OwnerRegisterPage, page: () => UserRegisterScreen()),
             GetPage(name: VillaListPage, page: () => MyVillaScreen()),
             GetPage(name: VillaDetailPage, page: () => VillaDetail()),
             GetPage(name: PreviewPage, page: () => PreviewScreen(),),
