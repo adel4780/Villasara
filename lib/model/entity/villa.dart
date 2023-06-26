@@ -10,7 +10,9 @@ class Villa {
   String? address;
   String? description;
   double? pricePerNight;
-  List<String>? images;
+  String? image1;
+  String? image2;
+  String? image3;
   String? createdAt;
   String? startDate;
   String? endDate;
@@ -25,7 +27,9 @@ class Villa {
     required this.address,
     required this.description,
     required this.pricePerNight,
-    required this.images,
+    this.image1,
+    this.image2,
+    this.image3,
     this.createdAt,
     required this.startDate,
     required this.endDate,
@@ -44,7 +48,9 @@ class Villa {
       createdAt: json['created_at'],
       startDate: json['start_date'],
       endDate: json['end_date'],
-      images: json['images'],
+      image1: json['villa_image1'],
+      image2: json['villa_image2'],
+      image3: json['villa_image3'],
     );
   }
   Map<String, dynamic> toJson() => {
@@ -59,6 +65,8 @@ class Villa {
         'price_per_night': pricePerNight,
         'start_date': startDate,
         'end_date': endDate,
-        'images': images,
+        'villa_image1': image1,
+        'villa_image2': image2,
+        'villa_image3': image3,
       };
 }

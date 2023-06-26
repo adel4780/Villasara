@@ -733,7 +733,9 @@ class _VillaEditState extends State<VillaEdit> {
                                                   widget.villa.startDate = startDay;
                                                   widget.villa.endDate = endDay;
                                                   widget.villa.description = _about;
-                                                  widget.villa.images = _logo;
+                                                  widget.villa.image1 = _logo[0];
+                                                  widget.villa.image2 = _logo[1];
+                                                  widget.villa.image3 = _logo[2];
 
 
                                                 await _viewModel.editVilla(widget.villa);

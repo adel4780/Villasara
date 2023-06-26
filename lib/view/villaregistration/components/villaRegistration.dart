@@ -726,7 +726,9 @@ class _VillaRegisterState extends State<VillaRegister> {
                                               startDate: startDay,
                                               endDate: endDay,
                                               description: _about,
-                                              images: _logo,
+                                              image1: _logo[0],
+                                              image2: _logo[1],
+                                              image3: _logo[2],
                                             );
                                             _viewModel.addVilla(villa);
                                             Get.toNamed(HomePage,
