@@ -6,7 +6,7 @@ class PersonRepositoryImpl extends PersonRepository {
 
   @override
   Future<List<Person>> getPersons() async {
-    var response = await dio.get('users/');
+    var response = await dio.get('Tenant/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -25,7 +25,7 @@ class PersonRepositoryImpl extends PersonRepository {
   @override
   @override
   Future<List<Person>> searchPersons(int id) async{
-    var response = await dio.get('users/');
+    var response = await dio.get('Tenant/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -44,7 +44,7 @@ class PersonRepositoryImpl extends PersonRepository {
   }
   @override
   Future<List<Person>> searchGuestPhone(String Phone, String role) async{
-    var response = await dio.get('users/');
+    var response = await dio.get('Tenant/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -64,7 +64,7 @@ class PersonRepositoryImpl extends PersonRepository {
   }
   @override
   Future<List<Person>> searchHostPhone(String Phone, String role) async{
-    var response = await dio.get('users/');
+    var response = await dio.get('Tenant/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -85,7 +85,7 @@ class PersonRepositoryImpl extends PersonRepository {
   @override
   Future<Person> addPerson(Person person) async {
     var response = await dio.post(
-      'users/',
+      'Tenant/',
       data: person,
     );
     print('response: ${response.statusMessage}');
@@ -96,7 +96,7 @@ class PersonRepositoryImpl extends PersonRepository {
   @override
   Future<void> editPerson(Person person) async {
     var response = await dio.patch(
-      'users/${person.id}/',
+      'Tenant/${person.id}/',
       data: person,
     );
     print('response: ${response.statusMessage}');
@@ -104,7 +104,7 @@ class PersonRepositoryImpl extends PersonRepository {
   @override
   Future<void> deletePerson(Person person) async {
     var response = await dio.delete(
-      'users/${person.id}/',
+      'Tenant/${person.id}/',
     );
     print('response: ${response.statusMessage}');
   }
