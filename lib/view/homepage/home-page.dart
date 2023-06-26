@@ -146,8 +146,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 textDirection: TextDirection.rtl,
                 child: InkWell(
                   onTap: () {
-                    Get.toNamed(VillaDetailPage,
-                        arguments: [widget.user, villa]);
+                    if(widget.user.role == guest){
+                      Get.toNamed(VillaDetailPage,
+                          arguments: [widget.user, villa]);
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.only(top: 10.h, right: 20.h),
@@ -167,13 +169,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    height: 200.h,
+                    height: 300.h,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
                           width: 200.w,
-                          height: 150.h,
+                          height: 200.h,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
