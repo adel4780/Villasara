@@ -22,7 +22,7 @@ class VillaDetail extends StatefulWidget {
 }
 
 class _VillaDetailState extends State<VillaDetail> {
-  late Contract contract;
+  //late Contract contract = Contract();
   late Person user;
   Villa? villa;
   late Person tenant;
