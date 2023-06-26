@@ -82,16 +82,16 @@ class Preview extends StatefulWidget {
   var user;
   Villa? villa;
   Contract contract;
-  late int? id;
-  late String? name;
-  late int? vilaOwnerid;
-  late String? state;
-  late String? city;
-  late String? region;
-  late String? address;
-  late String? description;
-  late double? pricePerNight;
-  late List<VillaImage> images;
+  late int? id =0;
+  late String? name ="";
+  late int? vilaOwnerid = 0;
+  late String? state="";
+  late String? city="";
+  late String? region="";
+  late String? address="";
+  late String? description="";
+  late double? pricePerNight=0;
+  //late List<VillaImage> images;
 
   @override
   State<Preview> createState() => _PreviewState();
@@ -99,10 +99,10 @@ class Preview extends StatefulWidget {
 
 class _PreviewState extends State<Preview> {
   final _viewModel = ContractViewModel();
-  String? startdate;
-  String? enddate;
-  late int amount;
-  late int period;
+  String? startdate="";
+  String? enddate="";
+  late int amount=0;
+  late int period=0;
 
   late String _image;
   @override

@@ -25,8 +25,8 @@ class _VillaDetailState extends State<VillaDetail> {
   //late Contract contract = Contract();
   late Person user;
   Villa? villa;
-  late Person tenant;
-  late String _owner_name;
+  late Person tenant = Person(phone_number: "", role: guest);
+  late String _owner_name="";
   final _personviewModel = PersonViewModel();
   final List<Person> _owners = [];
 
@@ -106,29 +106,29 @@ class Detail extends StatefulWidget {
   var user;
   Villa? villa;
   Person tenant;
-  late int? id;
-  late String? name;
-  late int? vilaOwnerid;
-  late String? villaOwner;
-  late String? state;
-  late String? city;
-  late String? region;
-  late String? address;
-  late String? description;
-  late double? pricePerNight;
-  late List<VillaImage> images;
+  late int? id =0;
+  late String? name = "";
+  late int? vilaOwnerid = 0;
+  late String? villaOwner = "";
+  late String? state = "";
+  late String? city ="";
+  late String? region = "";
+  late String? address ="";
+  late String? description="";
+  late double? pricePerNight = 0;
+  //late List<VillaImage> images = [];
   @override
   State<Detail> createState() => _DetailState();
 }
 
 class _DetailState extends State<Detail> {
-  late Contract contract;
+  late Contract contract= Contract(villaOwner: 0, villa: 0, tenant: 0, startDate: "", endDate: "", landownerPhone: "landownerPhone");
 
   final CarouselController _controller = CarouselController();
   int _current = 0;
   int _counter = 0;
 
-  List<String>? _imgList = [];
+  List<String>? _imgList = ["","",""];
 
   String startDay = '';
   String endDay = '';

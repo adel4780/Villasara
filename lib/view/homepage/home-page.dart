@@ -146,10 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 textDirection: TextDirection.rtl,
                 child: InkWell(
                   onTap: () {
-                    if(widget.user.role == guest) {
                       Get.toNamed(VillaDetailPage,
                           arguments: [widget.user, villa]);
-                    }
                   },
                   child: Container(
                     padding: EdgeInsets.only(top: 10.h, right: 20.h),
