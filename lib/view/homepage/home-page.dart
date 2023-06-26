@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     loadData().then(
       (value) => Timer(
-        Duration(seconds: 5),
+        Duration(seconds: 4),
         () {
           setState(
             () {
